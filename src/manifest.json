@@ -1,0 +1,31 @@
+{
+    "name": "Apertus Axiom Configurator",
+    "short_name": "AA Config",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color" : "#fff" ,
+    "theme_color": "#3367D6",
+    "description": "Axiom Camera Configuration",
+    "icons": [
+      {
+      "src": "img/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+      },{
+        "src": "img/favicon-96.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      },{
+        "src": "img/favicon-128.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      },{
+        "src": "img/favicon-144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      },{
+        "src": "img/favicon-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }]
+  }
