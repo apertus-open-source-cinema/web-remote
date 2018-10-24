@@ -10,10 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "browser-sync": "^2.26.3",
+    "eslint": "^5.7.0",
     "gulp": "^3.9.1",
-    "gulp-riot": "^1.1.5",
     "gulp-concat": "^2.6.1",
-    "gulp-uglify": "^3.0.1",
-    "gulp-rename": "^1.4.0"
+    "gulp-rename": "^1.4.0",
+    "gulp-riot": "^1.1.5",
+    "gulp-uglify": "^3.0.1"
   }
 }
