@@ -83,7 +83,5 @@
         console.log("data:", event, data)
     })
     
-    
-    
     </script>
-    </data-websocket>
+</data-websocket>

@@ -1,11 +1,11 @@
 {
-    "name": "Apertus Axiom Configurator",
-    "short_name": "AA Config",
+    "name": "Apertus Axiom Web Remote",
+    "short_name": "Web Remote",
     "start_url": "/",
     "display": "standalone",
     "background_color" : "#fff" ,
     "theme_color": "#3367D6",
-    "description": "Axiom Camera Configuration",
+    "description": "Axiom Camera Web App to Configure the Camera",
     "icons": [
       {
       "src": "img/favicon-32.png",
