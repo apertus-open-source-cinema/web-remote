@@ -4,7 +4,8 @@
   "description": "AXIOM Remote",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp run_dev"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.4.0",
     "gulp-riot": "^1.1.5",
-    "gulp-uglify": "^3.0.1"
+    "gulp-uglify": "^3.0.1",
+    "pump": "^3.0.0"
   }
 }
