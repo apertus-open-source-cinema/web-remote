@@ -21,42 +21,44 @@
 <style>
 
 </style>
+
 <!-- Code -->
 <script>
 // local 
-var self = this
+let self = this;
 
 // Mixin
-this.mixin(SharedMixin)
-this.disable = true
+this.mixin(SharedMixin);
+this.disable = true;
 
 this.list = []
 
 editValue(e){
     if (e.item.item.type === "component"){
-        self.observable.trigger('loadEditWindow', e.item.item)   // Passing the Component Dataset
+        self.observable.trigger('loadEditWindow', e.item.item);   // Passing the Component Dataset
     }
 }
-
 
 /**
  * OBSERVABLE
  */
 
+// Loading all Commands from the List
 this.observable.on('loadCommandList', function(data){
-    self.list = data
-    self.disable = false
-    self.update()
+    self.list = data;
+    self.disable = false;
+    self.update();
 })
 
+// Reload View
 this.observable.on('reloadView', function(){
-    self.update()
+    self.update();
 })
 
 // Load Page Components
 this.observable.on('loadPage', function(data){
-    self.disable = true
-    self.update()
+    self.disable = true;
+    self.update();
 })
 
 

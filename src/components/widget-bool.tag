@@ -1,26 +1,26 @@
 <widget-bool>
 <!-- Layout -->
-<div class="card-widget box">
+<div onclick={ setState } class="card-widget box">
         <div class="center">
             <h5>{ title }</h5>
     </div>
-    <div class="">
+    <div class="center">
         <div>
-            <i class="material-icons md-48">{ icon }</i>
+            <i hide={ value } class="material-icons md-48 red">highlight_off</i>
+            <i show={ value } class="material-icons md-48 blue">check_circle</i>
         </div>
     </div>
 </div>
 <!-- Custom Style -->
 <style>
+    .blue{
+        color: #0074d9;
+    }
+    .red{
+        color: red;
+    }
     .center {
         text-align: center;
-    }
-    .align {
-        vertical-align: middle;
-        margin: 2px;
-    }
-    .size {
-        font-size: 22px;
     }
     div.box {
         margin: 5px;
@@ -31,28 +31,34 @@
 <!-- Code -->
 <script>
 // local 
-var self = this
+let self = this;
 
 // Mixin
-this.mixin(SharedMixin)
+this.mixin(SharedMixin);
 
 // Getting the Object Data 
-this.dataObject = opts.data
+this.dataObject = opts.data;
 
 // Set Values
-this.title = "Dev Bool"
-this.icon = "highlight"
-this.id = "0000"
+this.title = 'Dev Bool';
+this.icon = 'highlight';
+this.id = '0000';
+this.value = false;
+
+setState(e){
+    this.value = !this.value;
+    this.update();
+}
 
 /**
  * OBSERVABLE
  */
 
 // On ID 
-this.observable.on("ID_" + this.id, function(value){
-    self.value = value.value
+this.observable.on('ID_' + this.id, function(value){
+    self.value = value.value;
     // ADD FUNCTION True / False
-    self.update()
+    self.update();
 })
 
 </script>

@@ -1,5 +1,5 @@
 // Mixin Setup with the values
-var SharedMixin = {
+let SharedMixin = {
     observable: riot.observable(),
     listview: false
 }
@@ -7,5 +7,5 @@ var SharedMixin = {
 // Creates the Data Object and the Interface when everything got loaded
 window.onload = () =>{
     // Mounting all Riot Tags
-    riot.mount('*')
+    riot.mount('*');
 }

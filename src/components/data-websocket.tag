@@ -74,7 +74,7 @@
      * OBSERVABLE
      */
     
-    // Getting all Obsevable and check if there is a change on a component
+    // Getting all Observable and check if there is a change on a component
     this.observable.on('*', function(event, data){
         // ID Tag update Value     
         if('ID_' === event.slice(0,3)){

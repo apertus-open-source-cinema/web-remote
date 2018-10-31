@@ -4,7 +4,7 @@
         <div class="center">
             <h5>{ title }</h5>
     </div>
-    <div class="">
+    <div class="center">
         <div>
             <i class="material-icons md-48">{ icon }</i>
             <span class="size">{ value }</span>
@@ -32,37 +32,37 @@
 <!-- Code -->
 <script>
 // local 
-var self = this
+let self = this;
 
 // Mixin
-this.mixin(SharedMixin)
+this.mixin(SharedMixin);
 
 // Getting the Object Data 
-this.dataObject = opts.data
+this.dataObject = opts.data;
 
 // Set Values
-this.title = this.dataObject.name
-this.value = this.dataObject.value
-this.icon = this.dataObject.defaultIcon
-this.id = this.dataObject._id
+this.title = this.dataObject.name;
+this.value = this.dataObject.value;
+this.icon = this.dataObject.defaultIcon;
+this.id = this.dataObject._id;
 
 /**
  * OBSERVABLE
  */
 
 // On ID 
-this.observable.on("ID_" + this.id, function(value){
-    self.value = value.value
+this.observable.on('ID_' + this.id, function(data){
+    self.value = data.value;
     // Compare value and get the correct icon 
-    if (self.dataObject.selectionType === "range"){
-        var i = 0
+    if (self.dataObject.selectionType === 'range'){
+        let i = 0;
         self.dataObject.selection.range.forEach(element => {
             if (parseInt(self.value) >= element){
-                i++
+                i++;
         }});
-        self.icon = self.dataObject.selection.icon[i]
+        self.icon = self.dataObject.selection.icon[i];
     }
-    self.update()
+    self.update();
 })
 
 </script>

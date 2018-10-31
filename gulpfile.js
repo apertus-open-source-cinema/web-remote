@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const riot = require('gulp-riot');
 const concat = require('gulp-concat')
-const uglify = require('gulp-uglify')
-const rename = require('gulp-rename')
+// const uglify = require('gulp-uglify')
+// const rename = require('gulp-rename')
 const browserSync = require('browser-sync');
 
 gulp.task('riot', () => {

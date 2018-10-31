@@ -39,37 +39,37 @@
 <!-- Code -->
 <script>
 // local 
-var self = this
+let self = this;
 
 // Mixin
-this.mixin(SharedMixin)
+this.mixin(SharedMixin);
 
 //
-this.chart_value = "00,00 20,50 40,100 60,80 80,20 100,100"
-this.list = []
+this.chart_value = '00,00 20,50 40,100 60,80 80,20 100,100';
+this.list = [];
 
 // Getting the Object Data 
-this.dataObject = opts.data
+this.dataObject = opts.data;
 
 // Set Values
-this.title = "Chart Dev"
+this.title = 'Chart Dev';
 
-this.count = 20
-this.x_count = 100
-this.y_count = 100
+this.count = 20;
+this.x_count = 100;
+this.y_count = 100;
 
-this.id = "id_08"
+this.id = 'id_08';
 
 /**
 * OBSERVABLE
 */
 
 // On ID 
-this.observable.on("ID_" + this.id, function(value){
-    let value = value.value
+this.observable.on('ID_' + this.id, function(data){
+    let value = data.value;
     // Add value to list 
-    self.list.push(value)
-    let length = self.list.count()
+    self.list.push(value);
+    let length = self.list.count();
     
     // for (let index = 0; index < ; index++) {
     //     self.chart_value = 
@@ -77,7 +77,7 @@ this.observable.on("ID_" + this.id, function(value){
         
     // }
 
-    self.update()
+    self.update();
 })
 
 </script>

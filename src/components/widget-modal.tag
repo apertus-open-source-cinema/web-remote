@@ -35,29 +35,28 @@
 <!-- Code -->
 <script>
 // local 
-var self = this
+let self = this;
 
 // Mixin
-this.mixin(SharedMixin)
+this.mixin(SharedMixin);
 
 // Current DataObject
-this.dataObject = []
-this.selection = []
+this.dataObject = [];
+this.selection = [];
 
 // Setting the Value to the Default Value defined by the defaultValue Attribute
 setToDefault(){
-    self.dataObject.value = self.dataObject.defaultValue
-    self.update()
+    self.dataObject.value = self.dataObject.defaultValue;
+    self.update();
 }
 
 selectedOnChange (e){
-    self.dataObject.value = e.srcElement.value
-    self.update()
+    self.dataObject.value = e.srcElement.value;
+    self.update();
 }
 
 updateValue(){
-    // 
-    self.observable.trigger("ID_" + self.dataObject._id, self.dataObject)
+    self.observable.trigger('ID_' + self.dataObject._id, self.dataObject);
     //db.updateItem(self.dataObject)
 }
 
@@ -66,11 +65,11 @@ updateValue(){
  */
 
 this.observable.on('loadEditWindow', function(value){
-    self.dataObject = value
-    self.selection = value.selection.split(",")
+    self.dataObject = value;
+    self.selection = value.selection.split(',');
     // Check
-    document.getElementById("modal-control").checked = true;
-    self.update()
+    document.getElementById('modal-control').checked = true;
+    self.update();
 })
 
 </script>

@@ -48,63 +48,63 @@
 <!-- Script -->
 <script>
 // local 
-var self = this
+let self = this;
 
 // Mixin
-this.mixin(SharedMixin)
+this.mixin(SharedMixin);
 
 // Fast Manipulation Edit
-this.searchComponents = []
-this.component = []
-this.showList = false
-self.state = false
+this.searchComponents = [];
+this.component = [];
+this.showList = false;
+self.state = false;
 
 // Clean up all Values when there is no search value
 clean(e){
-    e.srcElement.value = ""
-    self.searchComponents = []
-    self.component = []
-    self.showList = false
-    self.update()
+    e.srcElement.value = '';
+    self.searchComponents = [];
+    self.component = [];
+    self.showList = false;
+    self.update();
 }
 
 // Key Functiont for faster Execution 
 quickEdit(e){
-    var keyCode = e.code
-    if (keyCode === "Tab"){
+    let keyCode = e.code;
+    if (keyCode === 'Tab'){
         // Set Focus on First Input Element
         if (!self.state) {
-            self.component = self.searchComponents[0]
-            e.srcElement.value = self.component.name + ' '
-            var selection = self.component.selection.split(',')
-            self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, "")
-            e.preventDefault()
+            self.component = self.searchComponents[0];
+            e.srcElement.value = self.component.name + ' ';
+            let selection = self.component.selection.split(',');
+            self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, '');
+            e.preventDefault();
         }
         if (self.state) {
-            e.srcElement.value = self.component.name + ' ' + self.searchComponents[0].name
-            self.showList = false
-            e.preventDefault()
+            e.srcElement.value = self.component.name + ' ' + self.searchComponents[0].name;
+            self.showList = false;
+            e.preventDefault();
         }
     }
     // Clears the Search Input
-    if (keyCode === "Escape"){
-        console.log("Escape") 
-        self.clean(e)
+    if (keyCode === 'Escape'){
+        console.log('Escape');
+        self.clean(e);
     }
-    if (keyCode === "Enter"){
-        console.log("Enter") 
-        var scv = e.srcElement.value.slice(parseInt(self.component.name.length))
-        self.component.value = scv
-        self.observable.trigger("ID_" + self.component._id, self.component)
-        self.clean(e)
+    if (keyCode === 'Enter'){
+        console.log('Enter');
+        let scv = e.srcElement.value.slice(parseInt(self.component.name.length));
+        self.component.value = scv;
+        self.observable.trigger('ID_' + self.component._id, self.component);
+        self.clean(e);
     }
     // TODO Fix
     if (self.state) {
         if (self.component.name.length > e.srcElement.value.length){
 
-            self.state = false
+            self.state = false;
 
-            self.update()
+            self.update();
         }
 
     }
@@ -112,49 +112,49 @@ quickEdit(e){
 
 // Searching in the Database for the Items
 searchQuery(e){
-    console.log("searchquery")
-    self.state = Object.keys(self.component).length
+    console.log('searchquery');
+    self.state = Object.keys(self.component).length;
     if (!self.state) {
-        self.observable.trigger('DB_queryItems', 'view_searchvalue', 'name',  e.srcElement.value)
+        self.observable.trigger('DB_queryItems', 'view_searchvalue', 'name',  e.srcElement.value);
     }
     if (self.state) {
-        var scv = e.srcElement.value.slice(parseInt(self.component.name.length)+1)
-        var selection = self.component.selection.split(',')
-        self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, scv)
+        let scv = e.srcElement.value.slice(parseInt(self.component.name.length)+1);
+        let selection = self.component.selection.split(',');
+        self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, scv);
     }
     // Resetting Values
     if(e.srcElement.value.length < 1 ){
-        self.clean(e)
+        self.clean(e);
     }
-    self.update()
+    self.update();
 }
 
 setValue(e){
-    var sb = document.getElementById("searchbar")
-    var pos = e.srcElement.attributes.pos.value
+    let sb = document.getElementById('searchbar');
+    let pos = e.srcElement.attributes.pos.value;
     
     if (!self.state){
-        self.component = self.searchComponents[pos]
-        sb.value = self.component.name + ' '
-        var selection = self.component.selection.split(',')
-        self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, "" )
+        self.component = self.searchComponents[pos];
+        sb.value = self.component.name + ' ';
+        let selection = self.component.selection.split(',');
+        self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, '' );
 
     }
     else{
-        sb.value = self.component.name + ' ' + self.searchComponents[pos].name
-        self.showList = false
+        sb.value = self.component.name + ' ' + self.searchComponents[pos].name;
+        self.showList = false;
     }
     // Update and set the focus to Inputfield
-    sb.focus()
-    e.preventDefault()
-    self.update()
+    sb.focus();
+    e.preventDefault();
+    self.update();
 }
 
 this.observable.on('view_searchvalue', function(data){
-    console.log(data)
-    self.showList = Boolean(Number(data.length))
-    self.searchComponents = data
-    self.update()
+    console.log(data);
+    self.showList = Boolean(Number(data.length));
+    self.searchComponents = data;
+    self.update();
 })
 
 </script>

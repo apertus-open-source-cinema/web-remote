@@ -62,48 +62,48 @@
 <!-- Script -->
 <script>
 // local 
-var self = this
+let self = this;
 
 // Mixin
-this.mixin(SharedMixin)
+this.mixin(SharedMixin);
 
 // local Variable
-this.pagelist = []
+this.pagelist = [];
 
 // On Load get first Page with the Components 
 this.observable.on('firstPageLoad', function(data){
-    self.pagelist = data
-    self.update()
+    self.pagelist = data;
+    self.update();
 })
 
 // TODO nedds to be fixed
 testListner(e){
-    var d = document.body
-    var dwarea = document.getElementById("drawerWindow").getBoundingClientRect()
+    let d = document.body;
+    let dwarea = document.getElementById('drawerWindow').getBoundingClientRect();
     
-    d.addEventListener("click", function(event){
-        console.log(dwarea)
+    d.addEventListener('click', function(event){
+        console.log(dwarea);
     })
 }
 
 // Set Page 
 setPage(e){
-    var i = e.item.i
-    self.currentPage = self.pagelist[i]
-    self.observable.trigger('DB_queryItems', 'loadPage', '_id', self.currentPage.components)
-    self.update() 
+    let i = e.item.i;
+    self.currentPage = self.pagelist[i];
+    self.observable.trigger('DB_queryItems', 'loadPage', '_id', self.currentPage.components);
+    self.update();
 }
 
 // Load Commads List (view-commands.tag)
 setConfiguration(){
-    self.observable.trigger('loadPage','loadConfiguration')
+    self.observable.trigger('loadPage','loadConfiguration');
 }
 
 // Set List View
 setCommandList(){
-    self.observable.trigger('loadPage','loadCommand') // just a unique string value that every other view gets disabled
-    self.observable.trigger('DB_queryItems',"loadCommandList", 'type', 'component')
-    self.update()
+    self.observable.trigger('loadPage','loadCommand'); // just a unique string value that every other view gets disabled
+    self.observable.trigger('DB_queryItems','loadCommandList', 'type', 'component');
+    self.update();
 }
 
 </script>
