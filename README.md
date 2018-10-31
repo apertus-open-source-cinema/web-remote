@@ -3,18 +3,18 @@ AXIOM Beta webbased control GUI for camera remote control
 
 #### Target Features
 
-* All Function are in a Database that can be searched (at the moment JSON File)
-* Interface are Layoutet in Tabs
-* Tabs can be Add or Deleted and Edited (needs to be defined how it should implemented)
-* Preset Storage (needs to be defined how it should implemented)
+* All function are in a database that can be searched (at the moment JSON file)
+* Interface is layouted in tabs
+* Tabs can be added, deleted and edited (needs to be defined how it should be implemented)
+* Preset storage (needs to be defined how it should be implemented)
 
 
 #### Folder Layout
 /component  -> All view and widget components are here
-/css        -> CSS File Location
+/css        -> CSS file location
 /js         -> External JS files and App.js
-/img        -> Image Folder
-/icon       -> when project is on first version all icons will be inside here
+/img        -> Image folder
+/icon       -> in the future all icons will be inside here
 
 #### Structure (simple)
 **Current State**
@@ -40,8 +40,8 @@ Index HTML -> View TAG -> Widget Tag
 ## Data Structure
 
 **NOTE** 
-There are some Questions open that should be solved on a later stage. 
-Current Target is to have something to work with.
+There are some open questions that should be solved on a later stage. 
+Current target is to have something to work with.
 
 {
     "id"
