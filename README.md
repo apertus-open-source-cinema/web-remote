@@ -1,6 +1,18 @@
 # web-remote
 AXIOM Beta webbased control GUI for camera remote control
 
+
+## Installation
+
+1. Install nodejs and npm
+1. Download the Project
+1. Go to Folder where the `package.json` file is
+1. Run `npm install`
+
+To start a development server, run `npm run start`.  
+To build the project statically, run `npm run build`.
+
+
 #### Target Features
 
 * All function are in a database that can be searched (at the moment JSON file)
@@ -25,11 +37,10 @@ DB.file <> Custom DB Function <> Riot View Component
 
 
 #### Used JS Libs
+
 * Riot.js       (MVC Lib)
 * mini.css     (GUI Components Stylesheet)
 * custom DB       (Database stores all Commands / Presets / Interface layout) **NOT INPLEMENTED**
-    
-
 
 ### Components
 
@@ -39,10 +50,11 @@ Index HTML -> View TAG -> Widget Tag
 
 ## Data Structure
 
-**NOTE** 
-There are some open questions that should be solved on a later stage. 
+**NOTE**
+There are some open questions that should be solved on a later stage.
 Current target is to have something to work with.
 
+```js
 {
     "id"
     "camera_id" :   "camera id"
@@ -56,10 +68,7 @@ Current target is to have something to work with.
         "custom_value": false
     }
 }
-
-
-
-
+```
 
 ### Function
 
@@ -73,6 +82,8 @@ Current target is to have something to work with.
 * command           -> websocket command
 
 #### Data Structure
+
+```js
 {
     "_id":"value",
     "type":"value",
@@ -83,6 +94,7 @@ Current target is to have something to work with.
     "selection":"value",
     "command":"value"
 }
+```
 
 ### Page
 
@@ -93,6 +105,8 @@ Current target is to have something to work with.
 * components        -> Array of Components
 
 #### Data Structure
+
+```js
 {
     "_id":"value",
     "type":"value",
@@ -100,6 +114,7 @@ Current target is to have something to work with.
     "_pos":"value",
     "components": ["comp01_id", "comp02_id"]
 }
+```
 
 
 ## Observable
@@ -114,7 +129,9 @@ Current target is to have something to work with.
 
 There will be 2 Ports one for a open stream from the Camera to the Web Interface second a Communication port from Web Inetrface to Camera.
 
-Example sent Command
+Example sent Command:
+
+```js
 {
     "sender" : "web_ui",
     "module" : "image_sensor",
@@ -123,15 +140,4 @@ Example sent Command
     "timestamp" : "",  // can't remember the format for now
     "status" : "success"    //have still to be defined finally
 }
-
-## Installation
-
-Requirement npm: (https://nodejs.org/)
-
-1. Download the Project
-2. Go to Folder where the **package.json** file is
-3. Run **npm install**
-
-Development: **run_dev.sh** or **run_dev.bat**
-
-Build: **build.sh** or **build.bat**
+```
