@@ -43,7 +43,7 @@ this.dataObject = opts.data;
 this.title = 'Dev Bool';
 this.icon = 'highlight';
 this.id = '0000';
-this.value = false;
+this.value = true;
 
 setState(e){
     this.value = !this.value;

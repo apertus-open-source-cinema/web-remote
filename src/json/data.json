@@ -6,11 +6,11 @@
         "selection": "1/10,1/50,1/100,1/200",
         "command": "no command"
     },
-    { "_id": "id_02", "type": "component", "name": "name_02",
+    { "_id": "id_02", "type": "component", "name": "Gain",
         "class": "component",
-        "value": "BBB",
-        "defaultValue": "B",
-        "selection": "",
+        "value": "3",
+        "defaultValue": "3",
+        "selection": "1,2,3,4,6,8,10,12,14,16",
         "command": "no command"
     },
     { "_id": "id_03", "type": "component", "name": "name_03",

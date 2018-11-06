@@ -3,7 +3,7 @@
     <div>
         <!-- Search Bar -->
         <div  class="form-search dropdown">
-            <input id="searchbar" autofocus onkeydown={ quickEdit } oninput={ searchQuery } type="text" class="form-control" placeholder="Search">
+            <input id="searchbar" aria-label="Searchbar" autofocus onkeydown={ quickEdit } oninput={ searchQuery } type="text" class="form-control" placeholder="Search">
         </div>
         <div show={ showList } class="dropdown-content">
             <div each={ searchResult, i in searchComponents } >

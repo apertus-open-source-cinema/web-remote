@@ -1,7 +1,7 @@
 <widget-modal>
     <!-- Layout -->
     <input type="checkbox" id="modal-control" class="modal">
-    <div role="dialog" aria-labelledby="dialog-title">
+    <div onclick={ closeWindow } id="modalArea" role="dialog" aria-labelledby="dialog-title">
         <div class="card fluid">
             <div class="">
                 <h2 id="exampleModalLabel">{ dataObject.name }</h2>
@@ -43,6 +43,13 @@ this.mixin(SharedMixin);
 // Current DataObject
 this.dataObject = [];
 this.selection = [];
+
+closeWindow(e){
+    if(e.srcElement.id === "modalArea"){
+        document.getElementById('modal-control').checked = false;
+        this.update();
+    }
+}
 
 // Setting the Value to the Default Value defined by the defaultValue Attribute
 setToDefault(){
