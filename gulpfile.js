@@ -36,7 +36,7 @@ const static_paths = ['./src/*.html', './src/*.json', './src/icon/**/*', './src/
 
 gulp.task('copy_static', (cb) => {
     pump([
-        gulp.src(['./src/*.html', './src/*.json']), gulp.dest('./dest/'),
+        gulp.src('./src/*.{html,json}'), gulp.dest('./dest/'),
         gulp.src(['./src/icon/**/*']), gulp.dest('./dest/icon/'),
         gulp.src(['./src/font/**/*']), gulp.dest('./dest/font/'),
         gulp.src(['./src/json/**/*']), gulp.dest('./dest/json/'),
