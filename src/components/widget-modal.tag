@@ -8,6 +8,9 @@
                 <label for="modal-control" class="modal-close" ></label>
             </div>  
             <div class="section">
+                <input onclick={ autoUpdate } type="checkbox" checked={ autoUpdateState }/>Auto Update<br>
+            </div>
+            <div class="section">
                 <div class="form-group">
                     <label for="formSelection">Set { dataObject.name } Value:</label>
                     <select onchange={ selectedOnChange } class="form-control" id="formSelection">
@@ -22,7 +25,7 @@
             <div class="section">
                 <button onclick={ setToDefault } type="button" class="mui-btn">Set to Default</button>
                 <label type="button" class="tertiary" for="modal-control">Close</label>
-                <label onclick={ updateValue } type="button" class="primary" for="modal-control">Save changes</label>
+                <label onclick={ updateValueAndClose } type="button" class="primary" for="modal-control">Save changes</label>
             </div>
         </div>
     </div>
@@ -43,6 +46,7 @@ this.mixin(SharedMixin);
 // Current DataObject
 this.dataObject = [];
 this.selection = [];
+this.autoUpdateState = false;
 
 closeWindow(e){
     if(e.srcElement.id === "modalArea"){
@@ -59,12 +63,27 @@ setToDefault(){
 
 selectedOnChange (e){
     self.dataObject.value = e.srcElement.value;
+    if (self.autoUpdateState === true) {
+        self.updateValue();
+    }
     self.update();
 }
 
 updateValue(){
     self.observable.trigger('ID_' + self.dataObject._id, self.dataObject);
-    //db.updateItem(self.dataObject)
+}
+
+updateValueAndClose(){
+    self.autoUpdateState = false;
+    self.updateValue();
+}
+
+autoUpdate(e){
+    self.autoUpdateState = !self.autoUpdateState;
+    if (self.autoUpdateState === true) {
+        self.updateValue();
+    }
+    self.update();
 }
 
 /**

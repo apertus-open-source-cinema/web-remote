@@ -20,11 +20,11 @@
         "selection": "1/3,1,2/3,2,3,3/3,4,4/3",
         "command": "no command"
     },
-    { "_id": "id_04", "type": "component", "name": "name_04",
-        "class": "component",
-        "value": "DDD",
-        "defaultValue": "DDD",
-        "selection": "",
+    { "_id": "id_04", "type": "component", "name": "boolean Test",
+        "class": "bool",
+        "value": "true",
+        "defaultValue": "false",
+        "selection": "true,false",
         "command": "no command"
     },
     { "_id": "id_05", "type": "page", "name": "Basic Function",
@@ -34,7 +34,8 @@
             "id_02",
             "id_03",
             "id_04",
-            "id_08"
+            "id_08",
+            "id_09"
         ]
     },
     { "_id": "id_06", "type": "page", "name": "Image",
@@ -67,5 +68,11 @@
             "battery_full"
             ]
         }
+    },
+    { "_id": "id_09", "type": "component", "name": "ChartValue",
+        "class": "chart",
+        "value": "00,00 20,50 40,100 60,80 80,20 100,100",
+        "defaultValue": "false",
+        "command": "no command"
     }
 ]

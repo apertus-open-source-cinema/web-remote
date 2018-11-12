@@ -44,21 +44,24 @@ let self = this;
 // Mixin
 this.mixin(SharedMixin);
 
+// Getting the Object Data 
+this.dataObject = opts.data;
+
 //
-this.chart_value = '00,00 20,50 40,100 60,80 80,20 100,100';
+this.chart_value = this.dataObject.value;
 this.list = [];
 
 // Getting the Object Data 
 this.dataObject = opts.data;
 
 // Set Values
-this.title = 'Chart Dev';
+this.title = this.dataObject.name;
 
 this.count = 20;
 this.x_count = 100;
 this.y_count = 100;
 
-this.id = 'id_08';
+this.id = this.dataObject._id;
 
 /**
 * OBSERVABLE

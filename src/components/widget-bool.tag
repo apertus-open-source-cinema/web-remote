@@ -6,8 +6,8 @@
     </div>
     <div class="center">
         <div>
-            <i hide={ value } class="material-icons md-48 red">highlight_off</i>
-            <i show={ value } class="material-icons md-48 blue">check_circle</i>
+            <i show={ value } class="material-icons md-48 red">highlight_off</i>
+            <i hide={ value } class="material-icons md-48 blue">check_circle</i>
         </div>
     </div>
 </div>
@@ -40,10 +40,10 @@ this.mixin(SharedMixin);
 this.dataObject = opts.data;
 
 // Set Values
-this.title = 'Dev Bool';
-this.icon = 'highlight';
-this.id = '0000';
-this.value = true;
+this.title = this.dataObject.name;
+this.id = this.dataObject._id;
+this.value = this.dataObject.value;
+
 
 setState(e){
     this.value = !this.value;
@@ -57,7 +57,6 @@ setState(e){
 // On ID 
 this.observable.on('ID_' + this.id, function(value){
     self.value = value.value;
-    // ADD FUNCTION True / False
     self.update();
 })
 

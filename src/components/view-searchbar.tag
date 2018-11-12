@@ -93,7 +93,7 @@ quickEdit(e){
     }
     if (keyCode === 'Enter'){
         console.log('Enter');
-        let scv = e.srcElement.value.slice(parseInt(self.component.name.length));
+        let scv = e.srcElement.value.slice(parseInt(self.component.name.length +1));
         self.component.value = scv;
         self.observable.trigger('ID_' + self.component._id, self.component);
         self.clean(e);
