@@ -71,7 +71,7 @@
     },
     { "_id": "id_09", "type": "component", "name": "ChartValue",
         "class": "chart",
-        "value": "00,00 20,50 40,100 60,80 80,20 100,100",
+        "value": "0",
         "defaultValue": "false",
         "command": "no command"
     }

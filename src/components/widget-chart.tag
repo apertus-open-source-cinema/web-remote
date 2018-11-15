@@ -10,7 +10,7 @@
             fill="none"
             stroke="#0074d9"
             stroke-width="2"
-            points={ chart_value }
+            points={ chartValue }
         />
         </svg>
     </div>
@@ -47,21 +47,16 @@ this.mixin(SharedMixin);
 // Getting the Object Data 
 this.dataObject = opts.data;
 
-//
-this.chart_value = this.dataObject.value;
-this.list = [];
-
-// Getting the Object Data 
-this.dataObject = opts.data;
-
 // Set Values
+this.chartValue = "";
 this.title = this.dataObject.name;
-
-this.count = 20;
-this.x_count = 100;
-this.y_count = 100;
-
 this.id = this.dataObject._id;
+
+// Default Values
+this.countTotal = 20; // Total count of values that are showed
+this.list = Array(this.countTotal);
+this.xCount = 100;
+this.yCount = 100;
 
 /**
 * OBSERVABLE
@@ -69,17 +64,21 @@ this.id = this.dataObject._id;
 
 // On ID 
 this.observable.on('ID_' + this.id, function(data){
-    let value = data.value;
+    // limit array lenght
+    if (self.list.length >= self.countTotal) {
+        self.list.shift();
+    }
+    self.list.push((data.value).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}));
     // Add value to list 
-    self.list.push(value);
-    let length = self.list.count();
-    
-    // for (let index = 0; index < ; index++) {
-    //     self.chart_value = 
-    //     const element = array[index];
-        
-    // }
-
+    let length = self.list.length;
+    let chartCreateValue = "";
+    let steps = self.xCount / self.countTotal;
+    let addValue = ""; // emty variable
+    for (let index = length-1; index > -1; index--) {
+        chartCreateValue += addValue.concat(steps*index, ",", self.list[index], " ");
+    }
+    console.log("Chart Value:", chartCreateValue);
+    self.chartValue = chartCreateValue;
     self.update();
 })
 
