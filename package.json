@@ -19,6 +19,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-riot": "^1.1.5",
     "gulp-uglify": "^3.0.1",
+    "sw-precache": "^5.2.1",
     "pump": "^3.0.0"
   }
 }

@@ -1,3 +1,11 @@
+<!-- 
+
+    Widget Icon
+    ===========
+
+    Show's the Value by predefined Icons from the Parameters.
+
+ -->
 <widget-icon>
 <!-- Layout -->
 <div class="card-widget box">

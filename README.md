@@ -13,39 +13,24 @@ To start a development server, run `npm run start`.
 To build the project statically, run `npm run build`.
 
 
-#### Target Features
-
-* All function are in a database that can be searched (at the moment JSON file)
-* Interface is layouted in tabs
-* Tabs can be added, deleted and edited (needs to be defined how it should be implemented)
-* Preset storage (needs to be defined how it should be implemented)
-
-
 #### Folder Layout
 /component  -> All view and widget components are here
 /css        -> CSS file location
 /js         -> External JS files and App.js
 /img        -> Image folder
 /icon       -> in the future all icons will be inside here
+/font       -> Font Folder
 
 #### Structure (simple)
 **Current State**
 JSON FIle <> Custom DB Function <> Riot View Component
 
 **Target**
-DB.file <> Custom DB Function <> Riot View Component
-
-
-#### Used JS Libs
-
-* Riot.js       (MVC Lib)
-* mini.css     (GUI Components Stylesheet)
-* custom DB       (Database stores all Commands / Presets / Interface layout) **NOT INPLEMENTED**
+Axiom Server <> Custom DB Function <> Riot View Component
 
 ### Components
 
 #### Views
-
 Index HTML -> View TAG -> Widget Tag
 
 ## Data Structure
@@ -138,6 +123,6 @@ Example sent Command:
     "command" : "set_gain",
     "value" : "3"
     "timestamp" : "",  // can't remember the format for now
-    "status" : "success"    //have still to be defined finally
+    "status" : "success"    // has still to be defined finally
 }
 ```

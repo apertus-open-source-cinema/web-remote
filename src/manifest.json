@@ -1,7 +1,7 @@
 {
     "name": "Apertus Axiom Web Remote",
     "short_name": "Web Remote",
-    "start_url": "/",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color" : "#fff" ,
     "theme_color": "#3367D6",

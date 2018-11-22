@@ -1,3 +1,11 @@
+<!-- 
+
+    Database
+    ===========
+
+    Currently only a Test Setup for Loading and changing values.
+
+ -->
 <data-database>
 <script>
 
@@ -70,24 +78,23 @@ this.observable.on('DB_querySelection', function(trigger, object,  objectValue){
 })
 
 this.observable.on('DB_updateItem', function(updatedItem){
-        let arr = self.data;
-        for (let i = 0; i < arr.length; i++) {
-            //console.log(arr[i].name)
-            if (arr[i]._id === updatedItem._id){
-                arr[i].value = updatedItem.value;
-            }
+    let arr = self.data;
+    for (let i = 0; i < arr.length; i++) {
+        //console.log(arr[i].name)
+        if (arr[i]._id === updatedItem._id){
+            arr[i].value = updatedItem.value;
         }
-        console.log(self.data);
-    })
+    }
+    console.log(self.data);
+})
 
 this.observable.on('DB_deleteItems', function(){
-        self.data = [];
-    })
+    self.data = [];
+})
 
 this.observable.on('DB_addItem', function(objectArray){
-        self.data.push(objectArray);
-    })
-
+    self.data.push(objectArray);
+})
 
 // Getting all Observable and check if there is a change on a component
 this.observable.on('*', function(event, data){
@@ -102,9 +109,5 @@ this.observable.on('*', function(event, data){
     }
 
 })
-
-
-
-
 </script>
 </data-database>

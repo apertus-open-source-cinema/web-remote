@@ -1,3 +1,11 @@
+<!-- 
+
+    Page
+    ====
+
+    Creates the Page by Parameter.
+
+ -->
 <view-page hide={ disable }>
 <!-- Layout -->
     <!-- Load Components // Note: the full Object Value gets send to the Widget -->
@@ -12,7 +20,6 @@
 
 <!-- Custom Style -->
 <style>
-
 </style>
 
 <!-- Script -->
@@ -33,6 +40,10 @@ this.on('mount', function() {
     self.observable.trigger('DB_loadDatabase');
 })
 
+/**
+ * OBSERVABLE
+ */
+
 this.observable.on('DB_databaseLoaded',function(){
     self.observable.trigger('DB_queryItems','firstPageLoad', 'type', 'page');
 })
@@ -40,10 +51,6 @@ this.observable.on('DB_databaseLoaded',function(){
 this.observable.on('firstPageLoad', function(data){
     self.observable.trigger('DB_queryItems', 'loadPage', '_id', data[0].components);
 })
-
-/**
- * OBSERVABLE
- */
 
 // Load Page Components
 this.observable.on('loadPage', function(setPageValue){

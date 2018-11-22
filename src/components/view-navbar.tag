@@ -1,3 +1,10 @@
+<!-- 
+    Navigation Bar 
+    ==============
+
+    Generates Automaticaly the Menu's
+
+ -->
 <view-navbar>
 <!-- Layout -->
 <header class="sticky">
@@ -20,7 +27,7 @@
 
     <!-- DRAWER -->
     <div class="right">
-        <label onclick={ testListner } for="drawer-control" class="button drawer-toggle"></label>
+        <label onclick={ closeWhenOutsideClickListner } for="drawer-control" class="button drawer-toggle"></label>
     </div>
     
     <!-- Drawer Menu -->
@@ -76,8 +83,9 @@ this.observable.on('firstPageLoad', function(data){
     self.update();
 })
 
-// TODO nedds to be fixed
-testListner(e){
+// TODO:
+// Should close the Side Menu when the user clicks Outside the Menu
+closeWhenOutsideClickListner(e){
     let d = document.body;
     let dwarea = document.getElementById('drawerWindow').getBoundingClientRect();
     

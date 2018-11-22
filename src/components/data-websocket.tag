@@ -1,3 +1,13 @@
+<!-- 
+
+    Websocket
+    ===========
+
+    It gets all "ID_*" Observales that are changed and sent's the new value to the server.
+    Note: the UI updates before the Camera Daemon updates it!
+    If there is a fail it could be set back to the previews value. 
+
+ -->
 <data-websocket>
     <script>
     
@@ -10,7 +20,7 @@
     /**
      * Websocket  Handling
      */
-    
+
     var host = location.hostname;
     this.wsUrl = "ws://" + host + ":7070/"
     this.wsFeedUrl = "ws://" + host + ":7070/"
@@ -48,7 +58,7 @@
                 "value" : value,
                 "message": "",
                 "timestamp" : timestamp,  // can't remember the format for now
-                "status" : "success"    //have still to be defined finally
+                "status" : "success"    // has still to be defined
                 }
         return JSON.stringify(message)
     }
@@ -80,6 +90,7 @@
         if('ID_' === event.slice(0,3)){
             self.send(self.createMessage(data))
         }
+        // DEBUG Output of all Observable's
         console.log("data:", event, data)
     })
     

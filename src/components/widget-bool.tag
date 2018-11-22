@@ -1,3 +1,11 @@
+<!-- 
+
+    Widget Bool
+    ===========
+
+    Activate and deactivate the defined Parameter.
+
+ -->
 <widget-bool>
 <!-- Layout -->
 <div onclick={ setState } class="card-widget box">
@@ -44,7 +52,7 @@ this.title = this.dataObject.name;
 this.id = this.dataObject._id;
 this.value = this.dataObject.value;
 
-
+// Invert the Bool State True -> False -> True
 setState(e){
     this.value = !this.value;
     this.update();
@@ -55,10 +63,10 @@ setState(e){
  */
 
 // On ID 
-this.observable.on('ID_' + this.id, function(value){
-    self.value = value.value;
+this.observable.on('ID_' + this.id, function(data){
+    self.value = data.value;
     self.update();
-})
-
+});
 </script>
+
 </widget-bool>

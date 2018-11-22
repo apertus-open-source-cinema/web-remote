@@ -1,14 +1,11 @@
 # TODO
 
-## Bower & Grunt
-* Add Bower
-* Add Grunt
-
 ## CSS
 * Fix some Bugs
+* merge all widget / view CSS into one file (optional, very low priority)
 
 ## Manifest (PWA)
-* add Service Worker that the PWA will work 
+* make it work, base setup is done
 
 ## Data
 
@@ -17,9 +14,13 @@
 * Add Data Sync Functions
 
 ### Data File
-* create a better file definition 
+* update Data definition
+* Remove JSON File so it works only with Axiom Server (under Development) 
 
 ## View Tags
 
 ### Diagrams
-*  Add more diagramm types (example: chart)
+*  Add more diagramm types: Circle, Bar
+
+### Modal
+* Add Slidebar for Custom Values

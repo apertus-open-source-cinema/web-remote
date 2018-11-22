@@ -1,3 +1,11 @@
+<!-- 
+
+    Widget Modal
+    ===========
+
+    Show's a Modal Window where the User can update the value.
+
+ -->
 <widget-modal>
     <!-- Layout -->
     <input type="checkbox" id="modal-control" class="modal">
@@ -23,7 +31,7 @@
                 </div>
             </div>
             <div class="section">
-                <button onclick={ setToDefault } type="button" class="mui-btn">Set to Default</button>
+                <label onclick={ setToDefault } type="button" class="">Set to Default</label>
                 <label type="button" class="tertiary" for="modal-control">Close</label>
                 <label onclick={ updateValueAndClose } type="button" class="primary" for="modal-control">Save changes</label>
             </div>
@@ -90,9 +98,9 @@ autoUpdate(e){
  * OBSERVABLE
  */
 
-this.observable.on('loadEditWindow', function(value){
-    self.dataObject = value;
-    self.selection = value.selection.split(',');
+this.observable.on('loadEditWindow', function(data){
+    self.dataObject = data;
+    self.selection = data.selection.split(',');
     // Check
     document.getElementById('modal-control').checked = true;
     self.update();

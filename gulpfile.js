@@ -5,6 +5,15 @@ const concat = require('gulp-concat')
 // const rename = require('gulp-rename')
 const browserSync = require('browser-sync');
 const pump = require('pump');
+const swPrecache = require('sw-precache');
+
+gulp.task('service-worker', (cb) => {
+    var rootDir = 'src';
+    swPrecache.write(`${rootDir}/serviceworker.js`, {
+      staticFileGlobs: [rootDir + '/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff}'],
+      stripPrefix: rootDir
+    }, cb);
+  });
 
 gulp.task('riot', (cb) => {
     pump([
@@ -32,18 +41,21 @@ gulp.task('process_css', () => {
     return gulp.src(['src/css/**/*']).pipe(gulp.dest('dest/css')).pipe(browserSync.stream());
 });
 
-const static_paths = ['./src/*.html', './src/*.json', './src/icon/**/*', './src/json/**/*', './src/img/**/*'];
+const static_paths = ['./src/*.html', './src/*.js','./src/*.json', './src/icon/**/*', './src/json/**/*', './src/img/**/*'];
 
-gulp.task('copy_static', (cb) => {
-    pump([
-        gulp.src('./src/*.{html,json}'), gulp.dest('./dest/'),
-        gulp.src(['./src/icon/**/*']), gulp.dest('./dest/icon/'),
-        gulp.src(['./src/font/**/*']), gulp.dest('./dest/font/'),
-        gulp.src(['./src/json/**/*']), gulp.dest('./dest/json/'),
-        gulp.src(['./src/img/**/*']), gulp.dest('./dest/img/')
-    ],
-    cb
-    );
+const static_list =  
+{
+    'base':['./src/*.{html,json,js}', './dest/'],
+    'icon':['./src/icon/**/*', './dest/icon/'], 
+    'font':['./src/font/**/*', './dest/font/'],
+    'image':['./src/img/**/*', './dest/img/'],
+    'json_data':['./src/json/**/*', './dest/json/']
+};
+
+gulp.task('copy_static', () => {
+    for(count in static_list) {
+        gulp.src([static_list[count][0]]).pipe(gulp.dest(static_list[count][1]));
+    }
 });
 
 gulp.task('browser-sync', function () {
@@ -64,4 +76,4 @@ gulp.task('watch', ['browser-sync'], () => {
 
 gulp.task('run_dev', ['default', 'watch']);
 
-gulp.task('default', ['riot', 'process_css', 'process_js', 'copy_static']);
+gulp.task('default', ['service-worker','riot', 'process_css', 'process_js', 'copy_static']);

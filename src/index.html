@@ -29,7 +29,6 @@
     <!-- NOTE Firstpage Load Function inside view-page -->
     <view-page></view-page>
     <view-commands></view-commands>
-
     <widget-modal></widget-modal>
     
     <!-- External Libs -->
@@ -43,8 +42,8 @@
     <script>
         if('serviceWorker' in navigator) {
           navigator.serviceWorker
-                   .register('/js/serviceworker.js')
-                   .then(function() { console.log('Service Worker Registered'); });
+            .register('/serviceworker.js')
+            .then(function() { console.log('Service Worker Registered'); });
         }
     </script>
 </body>

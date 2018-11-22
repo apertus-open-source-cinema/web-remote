@@ -1,3 +1,12 @@
+<!-- 
+
+    Searchbar
+    ====
+
+    Search Parameter and change values.
+    Keyboard Commands:  Tab -> Selects First Parameter in the List and Loads selection List.
+
+ -->
 <view-searchbar>
     <!-- Layout -->
     <div>
@@ -88,11 +97,9 @@ quickEdit(e){
     }
     // Clears the Search Input
     if (keyCode === 'Escape'){
-        console.log('Escape');
         self.clean(e);
     }
     if (keyCode === 'Enter'){
-        console.log('Enter');
         let scv = e.srcElement.value.slice(parseInt(self.component.name.length +1));
         self.component.value = scv;
         self.observable.trigger('ID_' + self.component._id, self.component);
@@ -101,9 +108,7 @@ quickEdit(e){
     // TODO Fix
     if (self.state) {
         if (self.component.name.length > e.srcElement.value.length){
-
             self.state = false;
-
             self.update();
         }
 
@@ -112,7 +117,6 @@ quickEdit(e){
 
 // Searching in the Database for the Items
 searchQuery(e){
-    console.log('searchquery');
     self.state = Object.keys(self.component).length;
     if (!self.state) {
         self.observable.trigger('DB_queryItems', 'view_searchvalue', 'name',  e.srcElement.value);
@@ -151,11 +155,9 @@ setValue(e){
 }
 
 this.observable.on('view_searchvalue', function(data){
-    console.log(data);
     self.showList = Boolean(Number(data.length));
     self.searchComponents = data;
     self.update();
 })
-
 </script>
 </view-searchbar>

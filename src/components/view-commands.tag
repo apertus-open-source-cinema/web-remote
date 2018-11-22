@@ -1,3 +1,11 @@
+<!-- 
+
+    Commands
+    ===========
+
+    Show's all Command as a List.
+
+ -->
 <view-commands hide={ disable }>
 <!-- Layout -->
 <table class="striped">

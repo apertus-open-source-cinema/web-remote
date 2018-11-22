@@ -1,3 +1,12 @@
+<!-- 
+
+    Widget Chart
+    ===========
+
+    Show's the Value as a line chart. 
+    Currently predefined with showing last 20 values.
+
+ -->
 <widget-chart>
 <!-- Layout -->
 <div class="card-widget box">
@@ -68,12 +77,16 @@ this.observable.on('ID_' + this.id, function(data){
     if (self.list.length >= self.countTotal) {
         self.list.shift();
     }
+    // Set the Data to 2 Digits (example: 2 -> 02)
     self.list.push((data.value).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}));
+    
     // Add value to list 
     let length = self.list.length;
     let chartCreateValue = "";
     let steps = self.xCount / self.countTotal;
     let addValue = ""; // emty variable
+
+    // Creates the String vor the SVG points value
     for (let index = length-1; index > -1; index--) {
         chartCreateValue += addValue.concat(steps*index, ",", self.list[index], " ");
     }

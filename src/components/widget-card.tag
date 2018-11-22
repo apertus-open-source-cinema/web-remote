@@ -1,3 +1,11 @@
+<!-- 
+
+    Widget Card
+    ===========
+
+    Default Widget Shows Values.
+
+ -->
 <widget-card>
 <!-- Layout -->
 <div class="card-widget box" onclick={ editValue } hide={ listView }>
@@ -44,10 +52,6 @@ this.title = this.dataObject.name;
 this.value = this.dataObject.value;
 this.id = this.dataObject._id;
 
-this.on('mount', function() {
-    //console.log(this.title, this.value)
-})
-
 editValue(e){
     self.observable.trigger('loadEditWindow', self.dataObject);   // Passing the Component Dataset
 }
@@ -57,8 +61,8 @@ editValue(e){
  */
 
 // On ID 
-this.observable.on('ID_' + this.id, function(value){
-    self.value = value.value;
+this.observable.on('ID_' + this.id, function(data){
+    self.value = data.value;
     self.update();
 })
 
