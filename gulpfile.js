@@ -8,9 +8,9 @@ const pump = require('pump');
 const swPrecache = require('sw-precache');
 
 gulp.task('service-worker', (cb) => {
-    var rootDir = 'src';
+    var rootDir = 'dest';
     swPrecache.write(`${rootDir}/serviceworker.js`, {
-      staticFileGlobs: [rootDir + '/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff}'],
+      staticFileGlobs: [rootDir + '/**/*.{js,html,css,json,png,jpg,gif,svg,eot,ttf,woff,woff2}'],
       stripPrefix: rootDir
     }, cb);
   });
