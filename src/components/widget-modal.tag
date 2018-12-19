@@ -14,10 +14,15 @@
             <div class="">
                 <h2 id="exampleModalLabel">{ dataObject.name }</h2>
                 <label for="modal-control" class="modal-close" ></label>
-            </div>  
+            </div>
+            <!-- Auto Update -->
             <div class="section">
                 <input onclick={ autoUpdate } type="checkbox" checked={ autoUpdateState }/>Auto Update<br>
             </div>
+            <!-- Slider -->
+            <input class="slider" oninput={ selectedOnChange } type="range" min="0" max="{ selection.length-1 }" step="1">
+            <h4 class="center-text">{ value }</h4>
+            <!-- Pulldown -->
             <div class="section">
                 <div class="form-group">
                     <label for="formSelection">Set { dataObject.name } Value:</label>
@@ -30,6 +35,7 @@
                     </select>
                 </div>
             </div>
+            <!-- Buttons -->
             <div class="section">
                 <label onclick={ setToDefault } type="button" class="">Set to Default</label>
                 <label type="button" class="tertiary" for="modal-control">Close</label>
@@ -40,6 +46,13 @@
         
 <!-- Custom Style -->
 <style>
+.slider{
+    margin: 20px;
+    color: #0074d9;
+}
+.center-text{
+    text-align: center;
+}
 
 </style>
 
@@ -55,6 +68,7 @@ this.mixin(SharedMixin);
 this.dataObject = [];
 this.selection = [];
 this.autoUpdateState = false;
+this.value = "";
 
 closeWindow(e){
     if(e.srcElement.id === "modalArea"){
@@ -70,7 +84,8 @@ setToDefault(){
 }
 
 selectedOnChange (e){
-    self.dataObject.value = e.srcElement.value;
+    self.dataObject.value = self.selection[e.srcElement.value];
+    self.value = self.selection[e.srcElement.value];
     if (self.autoUpdateState === true) {
         self.updateValue();
     }
@@ -101,6 +116,7 @@ autoUpdate(e){
 this.observable.on('loadEditWindow', function(data){
     self.dataObject = data;
     self.selection = data.selection.split(',');
+    self.value = self.selection[0];
     // Check
     document.getElementById('modal-control').checked = true;
     self.update();

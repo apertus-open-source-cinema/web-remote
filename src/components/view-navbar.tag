@@ -15,13 +15,13 @@
     <!-- List View -->
     <div onclick={ setCommandList } class="block hidden-sm">
         <div class="button">
-            <i class="material-icons">view_list</i>
+            <i class="icon icon-view_list md-24"></i>
         </div>
     </div>
     <!-- App Settings -->
     <div onclick={ setConfiguration } class="block hidden-sm">
         <div class="button">
-            <i class="material-icons">settings</i>
+            <i class="icon icon-settings md-24"></i>
         </div>
     </div>
 
@@ -40,14 +40,14 @@
         <!-- List View -->
         <div onclick={ setListView }>
             <div class="button">
-                <i class="material-icons">view_list</i>
+                <i class="icon icon-view_list md-24"></i>
                 <span>List View</span>
             </div>
         </div>
         <!-- App Settings -->
         <div onclick={ setConfiguration }>
             <div class="button">
-                <i class="material-icons">settings</i>
+                <i class="icon icon-settings md-24"></i>
                 <span>Settings</span>
             </div>
         </div>

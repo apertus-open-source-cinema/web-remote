@@ -14,8 +14,8 @@
     </div>
     <div class="center">
         <div>
-            <i show={ value } class="material-icons md-48 red">highlight_off</i>
-            <i hide={ value } class="material-icons md-48 blue">check_circle</i>
+            <i show={ value } class="icon icon-highlight_off md-48 red"></i>
+            <i hide={ value } class="icon icon-check_circle_outline md-48 blue"></i>
         </div>
     </div>
 </div>

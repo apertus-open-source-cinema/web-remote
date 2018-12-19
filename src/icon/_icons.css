@@ -1,0 +1,34 @@
+/* fallback */
+@font-face {
+	font-family: '<%= fontName %>';
+	font-style: normal;
+	font-weight: 400;
+	src: url('<%= fontPath %><%= fontName %>.eot<%= cacheBusterQueryString %>');
+	src: url('<%= fontPath %><%= fontName %>.eot?<%= cacheBuster %>#iefix') format('eot'),
+		url('<%= fontPath %><%= fontName %>.woff<%= cacheBusterQueryString %>') format('woff'),
+		url('<%= fontPath %><%= fontName %>.ttf<%= cacheBusterQueryString %>') format('truetype'),
+		url('<%= fontPath %><%= fontName %>.svg<%= cacheBusterQueryString %>#<%= fontName %>') format('svg');
+}
+
+.<%= cssClass %>:before {
+	font-family: "<%= fontName %>";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	/* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+	text-decoration: none;
+	text-transform: none;
+}
+
+<% _.each(glyphs, function(glyph) { %>
+.<%= cssClass %>-<%= glyph.fileName %>:before {
+	content: "\<%= glyph.codePoint %>";
+}
+<% }); %>
+
+.<%= cssClass %>.md-18 { font-size: 18px; }
+.<%= cssClass %>.md-24 { font-size: 24px; }
+.<%= cssClass %>.md-36 { font-size: 36px; }
+.<%= cssClass %>.md-48 { font-size: 48px; }

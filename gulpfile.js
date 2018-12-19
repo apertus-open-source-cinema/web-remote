@@ -6,6 +6,12 @@ const concat = require('gulp-concat')
 const browserSync = require('browser-sync');
 const pump = require('pump');
 const swPrecache = require('sw-precache');
+// Font Creation
+const iconfont = require('gulp-iconfont');
+const iconfontCss = require('gulp-iconfont-css');
+var fontName = 'axiom-icons';
+var runTimestamp = Math.round(Date.now()/1000);
+
 
 gulp.task('service-worker', (cb) => {
     var rootDir = 'dest';
@@ -41,12 +47,34 @@ gulp.task('process_css', () => {
     return gulp.src(['src/css/**/*']).pipe(gulp.dest('dest/css')).pipe(browserSync.stream());
 });
 
+gulp.task('process_iconfont', function(){
+    return gulp.src(['./src/icon/svg/*.svg'])
+        .pipe(iconfontCss({
+        fontName: fontName, // The name that the generated font will have
+        path: 'src/icon/_icons.css', // The path to the template that will be used to create the SASS/LESS/CSS file
+        targetPath: '../../dest/css/' + fontName + '.css', // The path where the file will be generated
+        fontPath: '../icons/' // The path to the icon font file
+      }))
+      .pipe(iconfont({
+        fontName: fontName, // required
+        prependUnicode: false, // recommended option
+        formats: ['eot', 'woff', 'ttf', 'svg'], // default, 'woff2' and 'svg' are available
+        timestamp: runTimestamp, // recommended to get consistent builds when watching files
+        // fontHeight: '1001',
+        normalize: true
+      }))
+        .on('glyphs', function(glyphs, options) {
+          // CSS templating, e.g.
+          console.log(glyphs, options);
+        })
+      .pipe(gulp.dest('dest/icons/'));
+  });
+
 const static_paths = ['./src/*.html', './src/*.js','./src/*.json', './src/icon/**/*', './src/json/**/*', './src/img/**/*'];
 
 const static_list =  
 {
     'base':['./src/*.{html,json,js}', './dest/'],
-    'icon':['./src/icon/**/*', './dest/icon/'], 
     'font':['./src/font/**/*', './dest/font/'],
     'image':['./src/img/**/*', './dest/img/'],
     'json_data':['./src/json/**/*', './dest/json/']
@@ -76,4 +104,4 @@ gulp.task('watch', ['browser-sync'], () => {
 
 gulp.task('run_dev', ['default', 'watch']);
 
-gulp.task('default', ['service-worker','riot', 'process_css', 'process_js', 'copy_static']);
+gulp.task('default', ['service-worker','riot', 'process_css', 'process_js','process_iconfont', 'copy_static']);

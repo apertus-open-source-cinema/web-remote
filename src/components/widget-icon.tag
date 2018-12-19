@@ -14,7 +14,7 @@
     </div>
     <div class="center">
         <div>
-            <i class="material-icons md-48">{ icon }</i>
+            <i class="icon icon-{ icon } md-48"></i>
             <span class="size">{ value }</span>
         </div>
     </div>

@@ -19,6 +19,8 @@
     "gulp-rename": "^1.4.0",
     "gulp-riot": "^1.1.5",
     "gulp-uglify": "^3.0.1",
+    "gulp-iconfont": "^10.0.2",
+    "gulp-iconfont-css": "^2.3.0",
     "sw-precache": "^5.2.1",
     "pump": "^3.0.0"
   }
