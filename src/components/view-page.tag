@@ -15,6 +15,7 @@
             <widget-icon if={data.class == "icon"} data={ data }></widget-icon>
             <widget-bool if={data.class == "bool"} data={ data }></widget-bool>
             <widget-chart if={data.class == "chart"} data={ data }></widget-chart>
+            <widget-element if={data.class == "element"} data={ data }></widget-element>
         </div>
     </div>
 
@@ -49,7 +50,8 @@ this.observable.on('DB_databaseLoaded',function(){
 })
 
 this.observable.on('firstPageLoad', function(data){
-    self.observable.trigger('DB_queryItems', 'loadPage', '_id', data[0].components);
+    console.log(data[0]);
+    self.observable.trigger('DB_getItemsById', 'loadPage', '_id', data[0].components);
 })
 
 // Load Page Components

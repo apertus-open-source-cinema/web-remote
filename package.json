@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp run_dev",
     "dev": "gulp run_dev",
+    "devserver": "gulp run_devServer",
     "build": "gulp"
   },
   "author": "",
@@ -21,7 +22,10 @@
     "gulp-uglify": "^3.0.1",
     "gulp-iconfont": "^10.0.2",
     "gulp-iconfont-css": "^2.3.0",
+    "gulp-run": "^1.7.1",
     "sw-precache": "^5.2.1",
-    "pump": "^3.0.0"
+    "pump": "^3.0.0",
+    "ws": "^6.1.2",
+    "fs": "^0.0.1-security"
   }
 }

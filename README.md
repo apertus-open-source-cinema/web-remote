@@ -10,6 +10,7 @@ AXIOM Beta webbased control GUI for camera remote control
 1. Run `npm install`
 
 To start a development server, run `npm run start`.  
+To start a development server with node dev Server, run `npm run devserver`.  
 To build the project statically, run `npm run build`.
 
 

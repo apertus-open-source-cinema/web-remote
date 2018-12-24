@@ -47,20 +47,41 @@
     }
     
     // Create the Message
-    createMessage(data){
-        var timestamp = new Date().getTime()
-        var command = data.command
-        var value = data.value
-        var message = {
+    createMessage(type, data){
+        // var timestamp = new Date().getTime()
+        var command = data.command;
+        var value = data.value;
+        var message;
+        switch (type) {
+            case 'set':
+                message = {
                 "sender" : "web_ui",
-                "module" : "image_sensor",
+                "module" : data.type,
+                "type" : "set",
                 "command" : command,
-                "value" : value,
-                "message": "",
-                "timestamp" : timestamp,  // can't remember the format for now
-                "status" : "success"    // has still to be defined
+                "value" : value
                 }
-        return JSON.stringify(message)
+                break;
+            case 'get_all':
+                message = {
+                "sender" : "web_ui",
+                "module" : "system",
+                "type" : "get_all"
+                };
+                break;
+            case 'sync':
+                message = {
+                "sender" : "web_ui",
+                "module" : "system",
+                "type" : "sync",
+                "value" : value
+                }
+                break;
+            default:
+                break;
+        }
+        console.log(JSON.stringify(message));
+        return JSON.stringify(message);
     }
     
     // Websocket Feed 
@@ -88,7 +109,13 @@
     this.observable.on('*', function(event, data){
         // ID Tag update Value     
         if('ID_' === event.slice(0,3)){
-            self.send(self.createMessage(data))
+            self.send(self.createMessage('set',data))
+        }
+        if('WS_GET_ALL' === event){
+            self.send(self.createMessage('get_all',data))
+        }
+        if('WS_SYNC' === event){
+            self.send(self.createMessage('sync',data))
         }
         // DEBUG Output of all Observable's
         console.log("data:", event, data)

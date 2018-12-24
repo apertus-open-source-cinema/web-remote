@@ -1,25 +1,26 @@
 const gulp = require('gulp');
 const riot = require('gulp-riot');
-const concat = require('gulp-concat')
+const concat = require('gulp-concat');
 // const uglify = require('gulp-uglify')
 // const rename = require('gulp-rename')
 const browserSync = require('browser-sync');
 const pump = require('pump');
 const swPrecache = require('sw-precache');
-// Font Creation
+/* Font Creation */
 const iconfont = require('gulp-iconfont');
 const iconfontCss = require('gulp-iconfont-css');
 var fontName = 'axiom-icons';
 var runTimestamp = Math.round(Date.now()/1000);
-
+/* Development Server Websocket */
+var run = require('gulp-run');
 
 gulp.task('service-worker', (cb) => {
     var rootDir = 'dest';
     swPrecache.write(`${rootDir}/serviceworker.js`, {
-      staticFileGlobs: [rootDir + '/**/*.{js,html,css,json,png,jpg,gif,svg,eot,ttf,woff,woff2}'],
-      stripPrefix: rootDir
+        staticFileGlobs: [rootDir + '/**/*.{js,html,css,json,png,jpg,gif,svg,eot,ttf,woff,woff2}'],
+        stripPrefix: rootDir
     }, cb);
-  });
+});
 
 gulp.task('riot', (cb) => {
     pump([
@@ -50,25 +51,25 @@ gulp.task('process_css', () => {
 gulp.task('process_iconfont', function(){
     return gulp.src(['./src/icon/svg/*.svg'])
         .pipe(iconfontCss({
-        fontName: fontName, // The name that the generated font will have
-        path: 'src/icon/_icons.css', // The path to the template that will be used to create the SASS/LESS/CSS file
-        targetPath: '../../dest/css/' + fontName + '.css', // The path where the file will be generated
-        fontPath: '../icons/' // The path to the icon font file
-      }))
-      .pipe(iconfont({
-        fontName: fontName, // required
-        prependUnicode: false, // recommended option
-        formats: ['eot', 'woff', 'ttf', 'svg'], // default, 'woff2' and 'svg' are available
-        timestamp: runTimestamp, // recommended to get consistent builds when watching files
-        // fontHeight: '1001',
-        normalize: true
-      }))
+            fontName: fontName, // The name that the generated font will have
+            path: 'src/icon/_icons.css', // The path to the template that will be used to create the SASS/LESS/CSS file
+            targetPath: '../../dest/css/' + fontName + '.css', // The path where the file will be generated
+            fontPath: '../icons/' // The path to the icon font file
+        }))
+        .pipe(iconfont({
+            fontName: fontName, // required
+            prependUnicode: false, // recommended option
+            formats: ['eot', 'woff', 'ttf', 'svg'], // default, 'woff2' and 'svg' are available
+            timestamp: runTimestamp, // recommended to get consistent builds when watching files
+            // fontHeight: '1001',
+            normalize: true
+        }))
         .on('glyphs', function(glyphs, options) {
-          // CSS templating, e.g.
-          console.log(glyphs, options);
+            // CSS templating, e.g.
+            console.log(glyphs, options);
         })
-      .pipe(gulp.dest('dest/icons/'));
-  });
+        .pipe(gulp.dest('dest/icons/'));
+});
 
 const static_paths = ['./src/*.html', './src/*.js','./src/*.json', './src/icon/**/*', './src/json/**/*', './src/img/**/*'];
 
@@ -95,6 +96,10 @@ gulp.task('browser-sync', function () {
     });
 });
 
+gulp.task('dev_server', function (){
+    return run('node devServer/app.js').exec();
+});
+
 gulp.task('watch', ['browser-sync'], () => {
     gulp.watch(static_paths, ['copy_static']).on('change', browserSync.reload);
     gulp.watch('./src/js/**/*', ['process_js']).on('change', browserSync.reload);
@@ -105,3 +110,5 @@ gulp.task('watch', ['browser-sync'], () => {
 gulp.task('run_dev', ['default', 'watch']);
 
 gulp.task('default', ['service-worker','riot', 'process_css', 'process_js','process_iconfont', 'copy_static']);
+
+gulp.task('run_devServer', ['dev_server', 'run_dev']);
