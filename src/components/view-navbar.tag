@@ -78,7 +78,7 @@ this.mixin(SharedMixin);
 this.pagelist = [];
 
 // On Load get first Page with the Components 
-this.observable.on('firstPageLoad', function(data){
+this.observable.on('firstPageLoad', (data) => {
     self.pagelist = data;
     self.update();
 })
@@ -89,7 +89,7 @@ closeWhenOutsideClickListner(e){
     let d = document.body;
     let dwarea = document.getElementById('drawerWindow').getBoundingClientRect();
     
-    d.addEventListener('click', function(event){
+    d.addEventListener('click', (event) => {
         console.log(dwarea);
     })
 }
@@ -98,7 +98,7 @@ closeWhenOutsideClickListner(e){
 setPage(e){
     let i = e.item.i;
     self.currentPage = self.pagelist[i];
-    self.observable.trigger('DB_queryItems', 'loadPage', '_id', self.currentPage.components);
+    self.observable.trigger('DB_getItemsById', self.db_table, 'loadPage', '_id', self.currentPage.components);
     self.update();
 }
 
@@ -110,7 +110,7 @@ setConfiguration(){
 // Set List View
 setCommandList(){
     self.observable.trigger('loadPage','loadCommand'); // just a unique string value that every other view gets disabled
-    self.observable.trigger('DB_queryItems','loadCommandList', 'type', 'component');
+    self.observable.trigger('DB_queryItems', self.db_table ,'loadCommandList', 'type', 'component');
     self.update();
 }
 

@@ -112,3 +112,5 @@ gulp.task('run_dev', ['default', 'watch']);
 gulp.task('default', ['service-worker','riot', 'process_css', 'process_js','process_iconfont', 'copy_static']);
 
 gulp.task('run_devServer', ['dev_server', 'run_dev']);
+
+gulp.task('run_server', ['dev_server']);

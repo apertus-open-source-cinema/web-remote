@@ -8,6 +8,7 @@
     "start": "gulp run_dev",
     "dev": "gulp run_dev",
     "devserver": "gulp run_devServer",
+    "server": "gulp run_server",
     "build": "gulp"
   },
   "author": "",

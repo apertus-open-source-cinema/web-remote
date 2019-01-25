@@ -86,7 +86,7 @@ quickEdit(e){
             self.component = self.searchComponents[0];
             e.srcElement.value = self.component.name + ' ';
             let selection = self.component.selection.split(',');
-            self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, '');
+            self.observable.trigger('DB_querySelection', self.db_table, 'view_searchvalue', selection, '');
             e.preventDefault();
         }
         if (self.state) {
@@ -119,12 +119,12 @@ quickEdit(e){
 searchQuery(e){
     self.state = Object.keys(self.component).length;
     if (!self.state) {
-        self.observable.trigger('DB_queryItems', 'view_searchvalue', 'name',  e.srcElement.value);
+        self.observable.trigger('DB_queryItems', self.db_table, 'view_searchvalue', 'name',  e.srcElement.value);
     }
     if (self.state) {
         let scv = e.srcElement.value.slice(parseInt(self.component.name.length)+1);
         let selection = self.component.selection.split(',');
-        self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, scv);
+        self.observable.trigger('DB_querySelection', self.db_table, 'view_searchvalue', selection, scv);
     }
     // Resetting Values
     if(e.srcElement.value.length < 1 ){
@@ -141,7 +141,7 @@ setValue(e){
         self.component = self.searchComponents[pos];
         sb.value = self.component.name + ' ';
         let selection = self.component.selection.split(',');
-        self.observable.trigger('DB_querySelection', 'view_searchvalue', selection, '' );
+        self.observable.trigger('DB_querySelection', self.db_table, 'view_searchvalue', selection, '' );
 
     }
     else{
@@ -155,6 +155,7 @@ setValue(e){
 }
 
 this.observable.on('view_searchvalue', function(data){
+    console.log(data);
     self.showList = Boolean(Number(data.length));
     self.searchComponents = data;
     self.update();

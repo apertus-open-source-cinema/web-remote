@@ -32,14 +32,12 @@ if (!window.indexedDB) {
     window.alert("Your browser doesn't support a stable version of IndexedDB.")
 }
 
-this.data = "";
-
 this.db;
 this.db_name = "webremotedb";
 this.db_objstore_name = "camera_parameters";
 
 
-load(){
+load(db_table_name, data){
     var request = window.indexedDB.open(self.db_name, 1);
     request.onerror = function(event) {
         console.log("error: ");
@@ -55,18 +53,18 @@ load(){
     request.onupgradeneeded = function(event) {
         console.log("Fill DB");
         var db = event.target.result;
-        var objectStore = db.createObjectStore(self.db_objstore_name, {keyPath: "_id"});
+        var objectStore = db.createObjectStore(db_table_name, {keyPath: "_id"});
 
-        for (var i in self.data) {
-            objectStore.add(self.data[i]);
+        for (var i in data) {
+            objectStore.add(data[i]);
         }
     }
 }
 
-this.observable.on('DB_getItemsById', (trigger, objectType, objectValue) =>{
+this.observable.on('DB_getItemsById', (db_table_name, trigger, objectType, objectValue) =>{
     let match = [];
-    var transaction = self.db.transaction([self.db_objstore_name]);
-    var objectStore = transaction.objectStore(self.db_objstore_name);
+    var transaction = self.db.transaction([db_table_name]);
+    var objectStore = transaction.objectStore(db_table_name);
     objectValue.forEach( (id) =>{
         var request = objectStore.get(id);
         
@@ -87,9 +85,9 @@ this.observable.on('DB_getItemsById', (trigger, objectType, objectValue) =>{
     }
 });
 
-getItembyId(id) {
-    var transaction = self.db.transaction([self.db_objstore_name]);
-    var objectStore = transaction.objectStore(self.db_objstore_name);
+getItembyId(db_table_name, id) {
+    var transaction = self.db.transaction([db_table_name]);
+    var objectStore = transaction.objectStore(db_table_name);
     var request = objectStore.get(id);
     
     request.onerror = function(event) {
@@ -105,9 +103,9 @@ getItembyId(id) {
     };
 }
 
-updateValue(id, value){
-    var transaction = self.db.transaction([self.db_objstore_name], "readwrite");
-    var objectStore = transaction.objectStore(self.db_objstore_name);
+updateValue(db_table_name, id, value){
+    var transaction = self.db.transaction([db_table_name], "readwrite");
+    var objectStore = transaction.objectStore(db_table_name);
     var request = objectStore.get(id);
     console.log("update");
     console.log(request);
@@ -145,9 +143,9 @@ function add() {
 }
 */
 
-deleteItem(id) {
-    var request = self.db.transaction([self.db_objstore_name], "readwrite")
-    .objectStore(self.db_objstore_name)
+deleteItem(db_table_name, id) {
+    var request = self.db.transaction([db_table_name], "readwrite")
+    .objectStore(db_table_name)
     .delete(id);
     
     request.onsuccess = function(event) {
@@ -162,29 +160,26 @@ deleteItem(id) {
     The Database gets Loaded and a update get's requested over websocket.
 */  
 this.observable.on('DB_loadDatabase', () => {
-    // Load json File
-    console.log('data base load');
-    fetch(self.url)
-        .then(res => res.json())
-        .then((out) => {
-                self.data = out;
-                self.load();
-        })
-        .catch(err => { throw err })    
+    self.observable.trigger("WS_GET_ALL"); // Sent a request to Server to get Data
 });
     
+this.observable.on('DB_updateDatabase', (data) => {
+    console.log('DB_updateDatabase');
+    self.load(self.db_table, data);
+});
+
 /**
  * Database Handling
  */
 
- this.observable.on('DB_queryItems', (trigger, objectType, objectValue) =>{
+ this.observable.on('DB_queryItems', (db_table_name, trigger, objectType, objectValue) =>{
     let match = [];
-    var objectStore = self.db.transaction(self.db_objstore_name).objectStore(self.db_objstore_name);    
+    var objectStore = self.db.transaction(db_table_name).objectStore(db_table_name);    
     objectStore.openCursor().onsuccess = function(event) {
         var cursor = event.target.result;
-        
+
         if (cursor) {
-            if (cursor.value.hasOwnProperty(objectType) && cursor.value[objectType] === objectValue) {
+            if (cursor.value.hasOwnProperty(objectType) && cursor.value[objectType].search(new RegExp(objectValue, 'i')) > -1) {
                 match.push(cursor.value);
             }
             cursor.continue();
@@ -212,13 +207,13 @@ this.observable.on('DB_querySelection', (trigger, object,  objectValue) => {
     self.observable.trigger(trigger, matches);
 })
 
-this.observable.on('DB_updateItem', (item) => {
-    self.updateValue(item._id, item.value);
-})
+// this.observable.on('DB_updateItem', (item) => {
+//     self.updateValue(db_table_name, item._id, item.value);
+// })
 
-this.observable.on('DB_deleteItems', (items) => {
+this.observable.on('DB_deleteItems', (db_table_name, items) => {
     items.forEach((id) => {
-        self.deleteItem(id);
+        self.deleteItem(db_table_name, id);
     });
 })
 
@@ -230,7 +225,7 @@ this.observable.on('DB_addItem', (objectArray) => {
 this.observable.on('*', function(event, data){
     // ID Tag update Value     
     if('ID_' === event.slice(0,3)){
-        self.updateValue(data._id, data.value);
+        self.updateValue(self.db_table, data._id, data.value);
         self.observable.trigger('reloadView');
     }
 })

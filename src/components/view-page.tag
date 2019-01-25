@@ -45,17 +45,18 @@ this.on('mount', function() {
  * OBSERVABLE
  */
 
-this.observable.on('DB_databaseLoaded',function(){
-    self.observable.trigger('DB_queryItems','firstPageLoad', 'type', 'page');
+this.observable.on('DB_databaseLoaded',() => {
+    self.observable.trigger('DB_queryItems', self.db_table ,'firstPageLoad', 'type', 'page');
 })
 
-this.observable.on('firstPageLoad', function(data){
+this.observable.on('firstPageLoad', (data)  => {
     console.log(data[0]);
-    self.observable.trigger('DB_getItemsById', 'loadPage', '_id', data[0].components);
+    self.observable.trigger('DB_getItemsById', self.db_table , 'loadPage', '_id', data[0].components);
 })
 
 // Load Page Components
-this.observable.on('loadPage', function(setPageValue){
+this.observable.on('loadPage', (setPageValue) => {
+    console.log(setPageValue);
     if (typeof(setPageValue) === 'object'){
         self.components = setPageValue;
         self.disable = false;

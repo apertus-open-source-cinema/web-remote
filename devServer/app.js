@@ -9,6 +9,9 @@ const ws = new WebSocket.Server({port: 7070});
 
 // Load Config File
 let dataFile = '';
+// Load File on Startup 
+loadFile();
+
 function loadFile(){
     let filename = 'devServer/json/data.json';
     fs.readFile(filename, 'utf8', (err, data) => {
@@ -20,31 +23,35 @@ function loadFile(){
         console.log('File is Loaded: %s', filename);
     });
 }
-// Load File on Startup 
-loadFile();
 
 ws.on('connection', socket =>{
     socket.on('message', data => {
         var message = JSON.parse(data);
+        var tx_message;
         switch (message.type) {
         case 'get_all':
             console.log('get_all');
-            socket.send(dataFile);
+            tx_message = {
+                "sender": "server",
+                "type": "get_all",
+                "data": dataFile
+            }
+            socket.send(JSON.stringify(tx_message));
             break;
         case 'set':
             // Add Test code here
             console.log('set');
-            socket.send('{status:\'ok\')');
+            socket.send('{status:\'ok\'}');
             break;
             /**
             * This Command is for Development only
             */
         case 'close':
-            socket.send('{status:\'ok\')');
+            socket.send('{status:\'ok\'}');
             console.log('Close Application');
             process.exit();
         case 'reloadFile':
-            socket.send('{status:\'ok\')');
+            socket.send('{status:\'ok\'}');
             loadFile();
             console.log('Reload File');
         default:

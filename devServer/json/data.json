@@ -33,10 +33,10 @@
             "id_01",
             "id_02",
             "id_03",
+            "id_10",
             "id_04",
             "id_08",
-            "id_09",
-            "id_10"
+            "id_09"
         ]
     },
     { "_id": "id_06", "type": "page", "name": "Image",
@@ -78,8 +78,9 @@
     },
     { "_id": "id_10", "type": "component", "name": "Element Dev",
         "class": "element",
-        "value": "0",
-        "defaultValue": "false",
+        "value": "1",
+        "defaultValue": "3",
+        "selection": "1,2,3,4,6,8,10,12,14,16",
         "command": "no command"
     }
 ]

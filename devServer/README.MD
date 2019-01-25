@@ -27,3 +27,27 @@ Will close the Application
 ### reloadFile
 
 Reload the data File 
+
+# Test Patterns
+
+1. weighting the function
+2. set pattern
+3. set error state
+
+
+```js
+{
+    "id"
+    "data"      {
+        "value"
+        "defaultValue"
+        "range": [0,100]
+        "custom_value": false
+    }
+    "pattern" {
+        "weight" : "value"
+        "pattern" : "values"
+        "error" : "values"
+    }
+}
+```
