@@ -1,4 +1,38 @@
 
+function validateDataset(dataObject, value='') {
+    // Dataset is a javascript Object
+    console.log(typeof(dataObject));
+
+    // Set Value from DataObject or defined Value
+    if (value === ''){
+        value = dataObject.value;
+    }
+
+    if (typeof(dataObject)=== 'object'){
+        switch (dataObject.class) {
+            case 'component':
+            case 'element':
+                if (dataObject.selection.split(',').indexOf(value)>= 0){
+                    console.log("valid")
+                }
+                break;
+            case 'bool':
+                if (dataObject.selection.split(',').indexOf(value)>= 0){
+                    console.log("valid")
+                }
+                break;
+            case 'icon':
+                break;
+            default:
+                break;
+        }
+    }
+    else{
+        console.log('For Validating the Data Object it requires a JS Object')
+    }
+    
+}
+
 // Mixin Setup with the values
 let SharedMixin = {
     observable: riot.observable(),

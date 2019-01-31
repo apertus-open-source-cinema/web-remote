@@ -21,7 +21,7 @@
                     <h5>{ title }</h5>
                     <h4 class="value">{ value }</h4>
                     <!-- Slider -->
-                    <input class="slider" oninput={ selectedOnChange } type="range" min="0" max="{ selection.length-1 }" step="1">
+                    <input class="slider" oninput={ selectedOnChange } type="range" value={ sliderPos } min="0" max="{ selection.length-1 }" step="1">
             </div>
             <!-- Buttons -->
             <div class="section">
@@ -91,16 +91,20 @@ this.mixin(SharedMixin);
 this.dataObject = opts.data;
 
 // Set Values
+this.id = this.dataObject._id;
 this.title = this.dataObject.name;
 this.value = this.dataObject.value;
 this.selection = this.dataObject.selection.split(',');
-this.id = this.dataObject._id;
+this.sliderPos = '';
 this.stateBig = false;
 
 toggleSize(e){
     let d = document.getElementById(self.id);
     d.classList.toggle('box-active');
     self.stateBig = !self.stateBig;
+    // set Slider Position
+    self.sliderPos = self.selection.indexOf(self.value);
+    validateDataset(self.dataObject);
     self.update();
 }
 
