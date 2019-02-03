@@ -11,11 +11,10 @@
     <!-- Load Components // Note: the full Object Value gets send to the Widget -->
     <div class="row">
         <div each={ data, i in components }>
-            <widget-card if={data.class == "component"} data={ data } ></widget-card>
+            <widget-element if={data.class == "component"} data={ data } ></widget-element>
             <widget-icon if={data.class == "icon"} data={ data }></widget-icon>
             <widget-bool if={data.class == "bool"} data={ data }></widget-bool>
             <widget-chart if={data.class == "chart"} data={ data }></widget-chart>
-            <widget-element if={data.class == "element"} data={ data }></widget-element>
         </div>
     </div>
 

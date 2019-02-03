@@ -9,7 +9,7 @@
 <widget-element>
 <!-- Layout -->
 <div class="card-widget box" id={ id } hide={ listView }>
-    <div onclick={ toggleSize } if={ !stateBig }>
+    <div class="full-element" onclick={ toggleSize } if={ !stateBig }>
         <div class="center">
             <h5>{ title }</h5>
             <h4 class="center-text">{ value }</h4>
@@ -21,7 +21,7 @@
                     <h5>{ title }</h5>
                     <h4 class="value">{ value }</h4>
                     <!-- Slider -->
-                    <input class="slider" oninput={ selectedOnChange } type="range" value={ sliderPos } min="0" max="{ selection.length-1 }" step="1">
+                    <input class="slider" id={ id + "-valueslider" } oninput={ selectedOnChange } type="range" value={ sliderPos } min="0" max="{ selection.length-1 }" step="1">
             </div>
             <!-- Buttons -->
             <div class="section">
@@ -39,6 +39,10 @@
 <style>
     .value {
         font-size: 22px;
+    }
+    .full-element{
+        width: 100%;
+        height: 100%;
     }
     .content {
         position: relative;
@@ -77,6 +81,7 @@
     margin: 20px;
     color: #0074d9;
     width: -webkit-fill-available;
+    background-color: #f8f8f8;
 }
 </style>
 <!-- Code -->
@@ -104,13 +109,16 @@ toggleSize(e){
     self.stateBig = !self.stateBig;
     // set Slider Position
     self.sliderPos = self.selection.indexOf(self.value);
-    validateDataset(self.dataObject);
     self.update();
 }
 
 // Setting the Value to the Default Value defined by the defaultValue Attribute
 setToDefault(){
-    self.dataObject.value = self.dataObject.defaultValue;
+    let defaultValue = self.dataObject.defaultValue;
+    self.value = defaultValue;
+    self.sliderPos = self.selection.indexOf(defaultValue);
+    // TODO: Find a Better Solution
+    document.getElementById(self.id + "-valueslider").value = self.sliderPos;
     self.update();
 }
 
@@ -118,7 +126,7 @@ selectedOnChange (e){
     self.dataObject.value = self.selection[e.srcElement.value];
     self.value = self.selection[e.srcElement.value];
 
-    // self.updateValue();
+    self.updateValue();
     self.update();
 }
 
@@ -132,7 +140,11 @@ updateValue(){
 
 // On ID 
 this.observable.on('ID_' + this.id, function(data){
-    self.value = data.value;
+    let result = validateDataset(self.dataObject, data.value);
+    console.log('validation:', self.id, result);
+    if (result === true) {
+        self.value = data.value;
+    }
     self.update();
 })
 

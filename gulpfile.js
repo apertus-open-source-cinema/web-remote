@@ -31,7 +31,7 @@ gulp.task('riot', (cb) => {
         concat('components_all.js'),
         // .pipe(gulp.dest('dest/components'))
         // .pipe(rename('components_all.min.js'))
-        // .pipe(uglify())
+        // .pipe(uglify()),
         gulp.dest('dest/components')
     ],
     cb        

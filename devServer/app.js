@@ -26,38 +26,44 @@ function loadFile(){
 
 ws.on('connection', socket =>{
     socket.on('message', data => {
-        var message = JSON.parse(data);
-        var tx_message;
-        switch (message.type) {
-        case 'get_all':
-            console.log('get_all');
-            tx_message = {
-                "sender": "server",
-                "type": "get_all",
-                "data": dataFile
+        try {
+            var message = JSON.parse(data);
+        
+            var tx_message;
+            switch (message.type) {
+            case 'get_all':
+                console.log('get_all');
+                tx_message = {
+                    "sender": "server",
+                    "type": "get_all",
+                    "data": dataFile
+                }
+                socket.send(JSON.stringify(tx_message));
+                break;
+            case 'set':
+                // Add Test code here
+                console.log('set');
+                socket.send(JSON.stringify({"status":"ok"}));
+                break;
+                /**
+                * This Command is for Development only
+                */
+            case 'close':
+                socket.send('{status:\'ok\'}');
+                console.log('Close Application');
+                process.exit();
+            case 'reloadFile':
+                socket.send('{status:\'ok\'}');
+                loadFile();
+                console.log('Reload File');
+            default:
+                break;
             }
-            socket.send(JSON.stringify(tx_message));
-            break;
-        case 'set':
-            // Add Test code here
-            console.log('set');
-            socket.send('{status:\'ok\'}');
-            break;
-            /**
-            * This Command is for Development only
-            */
-        case 'close':
-            socket.send('{status:\'ok\'}');
-            console.log('Close Application');
-            process.exit();
-        case 'reloadFile':
-            socket.send('{status:\'ok\'}');
-            loadFile();
-            console.log('Reload File');
-        default:
-            break;
+            console.log('received: %s', data);
+        } catch (error) {
+            console.log('Can\'t parse the incoming Data');
+            socket.send('{status:\'error\', message:\'error by parsing incoming message}');
         }
-        console.log('received: %s', data);
     });
      
 });

@@ -42,9 +42,7 @@ this.disable = true;
 this.list = []
 
 editValue(e){
-    if (e.item.item.type === "component"){
-        self.observable.trigger('loadEditWindow', e.item.item);   // Passing the Component Dataset
-    }
+    console.log('TODO fix it');
 }
 
 /**

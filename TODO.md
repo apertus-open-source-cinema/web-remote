@@ -20,7 +20,10 @@
 ## View Tags
 
 ### Diagrams
-*  Add more diagramm types: Circle, Bar
+* Add more diagramm types: Circle, Bar
 
-### Modal
-* Add Slidebar for Custom Values
+### Notification
+* create a feature rich version
+
+## Websocket
+* create open message array for sending the data when the connection is again active

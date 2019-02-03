@@ -13,12 +13,18 @@ function validateDataset(dataObject, value='') {
             case 'component':
             case 'element':
                 if (dataObject.selection.split(',').indexOf(value)>= 0){
-                    console.log("valid")
+                    return true;
+                }
+                else { 
+                    return false;
                 }
                 break;
-            case 'bool':
-                if (dataObject.selection.split(',').indexOf(value)>= 0){
-                    console.log("valid")
+                case 'bool':
+                if (dataObject.selection.split(',').indexOf(value)>= 0){      
+                    return true;
+                }
+                else { 
+                    return false;
                 }
                 break;
             case 'icon':

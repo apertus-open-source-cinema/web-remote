@@ -40,7 +40,14 @@
     
         // Log errors
         self.ws.onerror = (error) => {
-            console.log('WebSocket Error ' + error);
+            // TODO: INplement a list with all open messages
+            console.log('WebSocket Error ');
+            self.observable.trigger('notification', 'Websocket can\'t connect to Server', 'danger');
+
+            setTimeout((msg=data) => {
+                self.send(msg);
+            }, 5000);
+
             /**
              * Todo: 
              * - on connection loos
@@ -50,6 +57,7 @@
     
         // Log messages from the server
         self.ws.onmessage = (e) => {
+            console.log(e.data);
             let message = JSON.parse(e.data);
             let data = JSON.parse(message.data);
             console.log('Server: ');
@@ -79,7 +87,7 @@
     // Create the Message
     createMessage(type, data) {
         // var timestamp = new Date().getTime()
-        var message;
+        let message;
         switch (type) {
             case 'set':
                 message = {
@@ -111,8 +119,8 @@
         return JSON.stringify(message);
     }
     
-    // Websocket Feed 
-    this.on('mount', () => {
+    init(){
+        console.log('Websocket init');
         var ws_feed = new WebSocket(self.wsFeedUrl);
     
         // Log errors
@@ -125,8 +133,13 @@
             var obj = JSON.parse(event.data);
             self.observable.trigger("ID_" + obj.id, obj);
         }
-    })
-    
+    }
+
+    // Websocket Feed 
+    this.on('mount', () => {
+        self.init();
+        })
+
     
     /**
      * OBSERVABLE
