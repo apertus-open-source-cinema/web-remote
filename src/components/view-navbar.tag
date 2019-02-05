@@ -10,14 +10,14 @@
 <header class="sticky">
     <a class="logo block"><img src="/img/apertus_Logo.svg" width="60" class="block" alt=""></a>
     <div each={item, i in pagelist} class="block hidden-sm">
-        <a class="button" onclick={ setPage }>{ item.name }</a>
+        <a class="button vertical" onclick={ setPage }>{ item.name }</a>
     </div>
     <!-- List View -->
-    <div onclick={ setCommandList } class="block hidden-sm">
+    <!-- <div onclick={ setCommandList } class="block hidden-sm">
         <div class="button">
             <i class="icon icon-view_list md-24"></i>
         </div>
-    </div>
+    </div> -->
     <!-- App Settings -->
     <div onclick={ setConfiguration } class="block hidden-sm">
         <div class="button">
@@ -38,17 +38,17 @@
             <a class="button" >{ item.name }</a>
         </div>
         <!-- List View -->
-        <div onclick={ setListView }>
+        <!-- <div onclick={ setListView }>
             <div class="button">
                 <i class="icon icon-view_list md-24"></i>
-                <span>List View</span>
+                <span class="vertical">List View</span>
             </div>
-        </div>
+        </div> -->
         <!-- App Settings -->
         <div onclick={ setConfiguration }>
             <div class="button">
                 <i class="icon icon-settings md-24"></i>
-                <span>Settings</span>
+                <span class="vertical">Settings</span>
             </div>
         </div>
     </div>
@@ -56,6 +56,9 @@
 
 <!-- Custom Style -->
 <style>
+    .vertical{
+        vertical-align:super;
+    }
     .right{
         float: right;
         display: inline-block;

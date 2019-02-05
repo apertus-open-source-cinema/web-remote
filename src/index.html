@@ -6,11 +6,11 @@
     <title>Apertus Axiom Interface</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Manifest PWA -->
-    <!-- <link rel="manifest" href="manifest.json"> -->
+    <!-- @if prod -->
+    <link rel="manifest" href="manifest.json">
+    <!-- @endif -->
     <!-- CSS Files  -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/app.css" />
-    <!-- Icons TODO: when the first verion is done to integrate the icons with no dependency -->
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" media="screen" href="css/axiom-icons.css" />
 
     <!-- mini CSS -->
@@ -21,10 +21,11 @@
         At the Moment this Client Software is in Development
         Please Read the Readme File
      -->
+     <view-notification></view-notification>
+     
     <data-database></data-database>
     <data-websocket></data-websocket>
     
-    <view-notification></view-notification>
     <view-navbar></view-navbar>
     <view-searchbar></view-searchbar>
     <!-- NOTE Firstpage Load Function inside view-page -->
@@ -38,13 +39,16 @@
 
     <!-- App JS File -->
     <script src="js/app.js"></script>
+
     <!-- Service Worker -->
-    <!-- <script>
+    <!-- @if prod -->
+    <script>
         if('serviceWorker' in navigator) {
-          navigator.serviceWorker
+            navigator.serviceWorker
             .register('/serviceworker.js')
             .then(function() { console.log('Service Worker Registered'); });
         }
-    </script> -->
+    </script>
+    <!-- @endif -->
 </body>
 </html>

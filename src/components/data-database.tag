@@ -194,11 +194,7 @@ this.observable.on('DB_querySelection', (trigger, object,  objectValue) => {
     let matches = [], i, key;
     let arr = object;
     console.log(objectValue, object);
-    // if (objectValue === ''){
-    //     return arr
-    // }
     for (let i = 0; i < arr.length; i++) {
-        console.log(objectValue);
         if( arr[i].search(new RegExp(objectValue, 'i')) > -1 ){
             let arrayItem = {name: arr[i]};
             matches.push( arrayItem );  // Add Array to List

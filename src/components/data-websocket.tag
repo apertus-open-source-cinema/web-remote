@@ -40,9 +40,8 @@
     
         // Log errors
         self.ws.onerror = (error) => {
-            // TODO: INplement a list with all open messages
-            console.log('WebSocket Error ');
-            self.observable.trigger('notification', 'Websocket can\'t connect to Server', 'danger');
+            // TODO: Inplement a list with all open messages
+            self.observable.trigger('notification', 'Websocket can\'t connect to Server', 'warning');
 
             setTimeout((msg=data) => {
                 self.send(msg);
@@ -68,12 +67,12 @@
                     console.log('get_all');
                     self.observable.trigger('DB_updateDatabase', data);
                     break;
-                case 'set':
-                    console.log('set');
-                    break;
-                case 'sync':
-                    console.log('sync');
-                    break;
+                // case 'set':
+                //     console.log('set');
+                //     break;
+                // case 'sync':
+                //     console.log('sync');
+                //     break;
             
                 default:
                     console.log('ERROR RX Message has a wrong Type!');
@@ -125,13 +124,19 @@
     
         // Log errors
         ws_feed.onerror = (error) => {
-            console.log('WebSocket Error ' + error);
+            self.observable.trigger('notification', 'Websocket Feed can\'t connect to Server', 'warning');
+
+            setTimeout(() => {
+                self.init();
+            }, 5000);
         }   
     
         console.log("start feed");
         ws_feed.onmessage = (event) => {
             var obj = JSON.parse(event.data);
-            self.observable.trigger("ID_" + obj.id, obj);
+            for (let i = 0; i < obj.length; i++) {
+                self.observable.trigger("ID_" + obj[i].id, obj[i]);
+            }
         }
     }
 

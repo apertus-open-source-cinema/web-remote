@@ -9,24 +9,25 @@
     "dev": "gulp run_dev",
     "devserver": "gulp run_devServer",
     "server": "gulp run_server",
-    "build": "gulp"
+    "build": "gulp build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "browser-sync": "^2.26.3",
     "eslint": "^5.7.0",
+    "fs": "^0.0.1-security",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
-    "gulp-rename": "^1.4.0",
-    "gulp-riot": "^1.1.5",
-    "gulp-uglify": "^3.0.1",
     "gulp-iconfont": "^10.0.2",
     "gulp-iconfont-css": "^2.3.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-riot": "^1.1.5",
     "gulp-run": "^1.7.1",
-    "sw-precache": "^5.2.1",
+    "gulp-uglify": "^3.0.1",
+    "gulp-simple-preprocess": "^1.0.0",
     "pump": "^3.0.0",
-    "ws": "^6.1.2",
-    "fs": "^0.0.1-security"
+    "sw-precache": "^5.2.1",
+    "ws": "^6.1.2"
   }
 }

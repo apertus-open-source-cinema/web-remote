@@ -3,6 +3,7 @@ const riot = require('gulp-riot');
 const concat = require('gulp-concat');
 // const uglify = require('gulp-uglify')
 // const rename = require('gulp-rename')
+const simplePreprocess = require('gulp-simple-preprocess');
 const browserSync = require('browser-sync');
 const pump = require('pump');
 const swPrecache = require('sw-precache');
@@ -13,6 +14,24 @@ var fontName = 'axiom-icons';
 var runTimestamp = Math.round(Date.now()/1000);
 /* Development Server Websocket */
 var run = require('gulp-run');
+
+
+
+gulp.task('prod_mode', (cb) => {
+    return gulp.src('./src/index.html')
+    .pipe(simplePreprocess({
+            env: 'prod'
+        }))
+    .pipe(gulp.dest('dest'));
+});
+
+gulp.task('dev_mode', (cb) => {
+    return gulp.src('./src/index.html')
+    .pipe(simplePreprocess({
+            env: 'dev'
+        }))
+    .pipe(gulp.dest('dest'));
+});
 
 gulp.task('service-worker', (cb) => {
     var rootDir = 'dest';
@@ -71,11 +90,11 @@ gulp.task('process_iconfont', function(){
         .pipe(gulp.dest('dest/icons/'));
 });
 
-const static_paths = ['./src/*.html', './src/*.js','./src/*.json', './src/icon/**/*', './src/json/**/*', './src/img/**/*'];
+const static_paths = ['./src/*.js','./src/*.json', './src/icon/**/*', './src/json/**/*', './src/img/**/*'];
 
 const static_list =  
 {
-    'base':['./src/*.{html,json,js}', './dest/'],
+    'base':['./src/*.{json,js}', './dest/'],
     'font':['./src/font/**/*', './dest/font/'],
     'image':['./src/img/**/*', './dest/img/'],
     'json_data':['./src/json/**/*', './dest/json/']
@@ -107,7 +126,9 @@ gulp.task('watch', ['browser-sync'], () => {
     gulp.watch('./src/css/**/*', ['process_css']);
 });
 
-gulp.task('run_dev', ['default', 'watch']);
+gulp.task('run_dev', ['default', 'dev_mode', 'watch']);
+
+gulp.task('build', ['default', 'prod_mode']);
 
 gulp.task('default', ['service-worker','riot', 'process_css', 'process_js','process_iconfont', 'copy_static']);
 

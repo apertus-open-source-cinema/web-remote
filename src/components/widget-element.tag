@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="content" if={ stateBig }>
-            <i onclick={ toggleSize } class="right icon icon-highlight_off md-24"></i>
+            <i onclick={ toggleSize } class="right icon icon-call_received md-24"></i>
             <div class="center">
                     <h5>{ title }</h5>
                     <h4 class="value">{ value }</h4>
@@ -24,8 +24,8 @@
                     <input class="slider" id={ id + "-valueslider" } oninput={ selectedOnChange } type="range" value={ sliderPos } min="0" max="{ selection.length-1 }" step="1">
             </div>
             <!-- Buttons -->
-            <div class="section">
-                <label onclick={ setToDefault } class="button">Default</label>
+            <div class="section pos-relative">
+                <i onclick={ setToDefault } title="Set to Default" class="icon icon-settings_backup_restore md-36 butt-default"></i>
             </div>
     </div>
 </div>
@@ -74,8 +74,10 @@
         opacity: 1;
         transition: 0.5s;
     }
-    .butt{
-        margin: 5px;
+
+    .butt-default{
+        margin: 10px;
+        position:inherit;
     }
     .slider{
     margin: 20px;
@@ -141,6 +143,7 @@ updateValue(){
 // On ID 
 this.observable.on('ID_' + this.id, function(data){
     let result = validateDataset(self.dataObject, data.value);
+    self.observable.trigger('notification', ''.concat('iD: ', self.id, ' Value: ', data.value ));
     console.log('validation:', self.id, result);
     if (result === true) {
         self.value = data.value;

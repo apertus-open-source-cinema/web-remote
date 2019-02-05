@@ -36,7 +36,7 @@ this.disable = false;
 
 // On Load get first Page with the Components 
 this.on('mount', function() {
-    console.log('load Database');
+    // console.log('load Database');
     self.observable.trigger('DB_loadDatabase');
 })
 
@@ -49,13 +49,11 @@ this.observable.on('DB_databaseLoaded',() => {
 })
 
 this.observable.on('firstPageLoad', (data)  => {
-    console.log(data[0]);
     self.observable.trigger('DB_getItemsById', self.db_table , 'loadPage', '_id', data[0].components);
 })
 
 // Load Page Components
 this.observable.on('loadPage', (setPageValue) => {
-    console.log(setPageValue);
     if (typeof(setPageValue) === 'object'){
         self.components = setPageValue;
         self.disable = false;

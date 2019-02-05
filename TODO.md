@@ -27,3 +27,4 @@
 
 ## Websocket
 * create open message array for sending the data when the connection is again active
+* on Connection loos detecting and reconnection
