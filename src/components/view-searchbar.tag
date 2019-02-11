@@ -16,7 +16,7 @@
         </div>
         <div show={ showList } class="dropdown-content">
             <div each={ item, i in list } >
-                <div class="list" onclick={ setValue } pos={ i }><h6>{ item }</h6></div>
+                <div class="list" onclick={ setValue } pos={ item.pos }><h6>{ item.value }</h6></div>
             </div>
         </div>
     </div>
@@ -109,16 +109,29 @@ searchbarInput(e){
         self.searchQuery(e);
     }
     else{
-        let value = e.srcElement.value;
+        // Search in Selection from Item
+        let inputString = e.srcElement.value;
         let name = self.item.name;
         let length = name.length;
-        
-        if (value.slice(0, length) !== name) {
+        let searchValue = inputString.slice(length+1);
+
+        if (inputString.slice(0, length) !== name) {
             self.item = '';
         }
+
+        let find = [];
+        for (let i = 0; i < self.list.length; i++){
+            if(self.list[i].value.search(searchValue) != -1){
+                find.push(self.list[i]);
+            }
+        }
+        self.list = find; 
+
+        // if (searchValue === '') {
+        //     self.observable.trigger('view_searchvalue', self.item.selection);
+        // }   
     }
 }
-
 
 /**
  *  Key Events
@@ -129,10 +142,11 @@ onKeyEsc(e){
     self.clean(e);
 }
 
-onKexEnter(e){
+onKeyEnter(e){
+
     self.item.value = self.item.selection[self.itemSelectionPos];
     self.observable.trigger('ID_' + self.item._id, self.item);
-    self.clean();
+    self.clean(e);
 }
 
 onKeyPress(e){
@@ -146,7 +160,7 @@ onKeyPress(e){
         e.preventDefault();
     }
     if (keyCode === 'Enter'){
-        self.onKexEnter(e);
+        self.onKeyEnter(e);
         e.preventDefault();
     }
 }
@@ -159,6 +173,19 @@ onKeyUp(e){
         }
         e.preventDefault();
     }
+}
+
+/**
+ * Helper Functions
+*/
+
+stringToListArray(item){
+    let list= [];
+        let data = item.selection.split(',');
+        for (let i = 0; i < data.length; i++) {
+            list.push({"value" : data[i], "pos": i});
+        }
+    return list;
 }
 
 /**
@@ -185,8 +212,9 @@ this.observable.on('view_searchvalue', (data) =>{
     self.components = data;
     let list = [];
     for (let i = 0; i < data.length; i++) {
-        list.push(data[i].name);
+        list.push({"value" : data[i].name, "pos": i});
     }
+    console.log("view_searchvalue",list);
     self.observable.trigger('view_showList', list);
 });
 
@@ -194,10 +222,12 @@ this.observable.on('view_searchvalue', (data) =>{
 this.observable.on('view_selectionvalue', (pos) =>{
     if(self.item === ''){
         self.item = self.components[pos];
-        let list = self.components[pos].selection.split(',');
-        self.observable.trigger('view_showList', list);
+        self.observable.trigger('view_showList', self.stringToListArray(self.item));
+        self.observable.trigger('view_setItemName', pos);
     }
-    self.observable.trigger('view_setItemName', pos);
+    else{
+        self.observable.trigger('view_showList', self.stringToListArray(self.item));
+    }
 });
 
 </script>
