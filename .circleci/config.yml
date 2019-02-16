@@ -7,7 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
-          command: npm run build
+          command: |
+            npm install
+            npm run build
       - run:
           command: |
             mkdir /tmp/artefacts
