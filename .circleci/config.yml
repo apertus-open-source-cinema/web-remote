@@ -15,6 +15,6 @@ jobs:
           command: |
             mkdir /tmp/artefacts
             zip -r dest.zip dest/
-            cp dist.zip /tmp/artefacts
+            cp dest.zip /tmp/artefacts
       - store_artifacts:
           path: /tmp/artefacts
