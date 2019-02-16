@@ -2,6 +2,14 @@
 AXIOM Beta webbased control GUI for camera remote control
 
 
+# Build status
+| master |
+|:------:|
+|[![CircleCI](https://circleci.com/gh/apertus-open-source-cinema/web-remote/tree/master.svg?style=svg)](https://circleci.com/gh/apertus-open-source-cinema/web-remote/tree/master)|
+
+
+
+
 ## Installation
 
 1. Install nodejs and npm
