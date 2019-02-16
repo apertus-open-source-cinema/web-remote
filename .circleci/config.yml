@@ -1,0 +1,17 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: node:8-alpine
+    steps:
+      - checkout
+      - run:
+          command: npm run build
+      - run:
+          command: |
+            mkdir /tmp/artefacts
+            zip -r dist.zip dist
+            cp AXIOM_Remote_Prototype_V01.X/dist/default/production/* /tmp/artefacts
+      - store_artifacts:
+path: /tmp/artefacts
