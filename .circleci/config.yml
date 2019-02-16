@@ -8,6 +8,7 @@ jobs:
       - checkout
       - run:
           command: |
+            apk add python
             npm install
             npm run build
       - run:
