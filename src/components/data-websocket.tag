@@ -92,9 +92,14 @@
                 message = {
                 "sender" : "web_ui",
                 "module" : data.type,
-                "type" : "set",
-                "command" : data.command,
-                "value" : data.value
+                "command" : "set",
+                "parameter" : data.command,
+                "value1" : data.value,
+                "value2" : '',
+                "status" : '',
+                "message" : '',
+                "timestamp" : '',
+
                 };
                 break;
             case 'get_all':
