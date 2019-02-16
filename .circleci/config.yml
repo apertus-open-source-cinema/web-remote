@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           command: |
-            apk add python make g++
+            apk add python make g++ zip
             npm install
             npm run build
       - run:
