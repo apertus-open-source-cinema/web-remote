@@ -13,11 +13,11 @@
         <a class="button vertical" onclick={ setPage }>{ item.name }</a>
     </div>
     <!-- List View -->
-    <!-- <div onclick={ setCommandList } class="block hidden-sm">
+    <div onclick={ setCommandList } class="block hidden-sm">
         <div class="button">
             <i class="icon icon-view_list md-24"></i>
         </div>
-    </div> -->
+    </div>
     <!-- App Settings -->
     <div onclick={ setConfiguration } class="block hidden-sm">
         <div class="button">
@@ -38,12 +38,12 @@
             <a class="button" >{ item.name }</a>
         </div>
         <!-- List View -->
-        <!-- <div onclick={ setListView }>
+        <div onclick={ setListView }>
             <div class="button">
                 <i class="icon icon-view_list md-24"></i>
                 <span class="vertical">List View</span>
             </div>
-        </div> -->
+        </div>
         <!-- App Settings -->
         <div onclick={ setConfiguration }>
             <div class="button">

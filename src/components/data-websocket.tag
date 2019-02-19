@@ -94,12 +94,11 @@
                 "module" : data.type,
                 "command" : "set",
                 "parameter" : data.command,
-                "value1" : data.value,
+                "value1" : data.selection.split(',').indexOf(data.value).toString(),
                 "value2" : '',
                 "status" : '',
                 "message" : '',
                 "timestamp" : '',
-
                 };
                 break;
             case 'get_all':
