@@ -1,0 +1,20 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: node:8-alpine
+    steps:
+      - checkout
+      - run:
+          command: |
+            apk --no-cache add python make g++ zip ca-certificates
+            npm install
+            npm run build
+      - run:
+          command: |
+            mkdir /tmp/artefacts
+            zip -r dest.zip dest/
+            cp dest.zip /tmp/artefacts
+      - store_artifacts:
+          path: /tmp/artefacts
