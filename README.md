@@ -17,8 +17,8 @@ AXIOM Beta webbased control GUI for camera remote control
 1. Go to Folder where the `package.json` file is
 1. Run `npm install`
 
-To start a development server, run `npm run start`.  
-To start a development server with node dev Server, run `npm run devserver`.  
+To start a development gulp build server, run `npm run dev`.  
+To start the development websocket server, run `npm run server`.  
 To build the project statically, run `npm run build`.
 
 
@@ -44,74 +44,93 @@ Index HTML -> View TAG -> Widget Tag
 
 ## Data Structure
 
-**NOTE**
-There are some open questions that should be solved on a later stage.
-Current target is to have something to work with.
+### Daemon Data
 
 ```js
 {
-    "id"
-    "camera_id" :   "camera id"
-    "function_id" :   "unique value",
-    "type"      :   "data type",
-    "class"     :   "for what type of object"
-    "data"      {
-        "value"
-        "defaultValue"
-        "range": [0,100]
-        "custom_value": false
-    }
+    "module": "image_sensor",
+    "parameter": "digital_gain",
+    "possibleValues": [
+    "1", "2", "3", "4", "6", "8", "10", "12", "14", "16"
+    ],
+    "currentValue": "1",
+    "defaultValue": "1",
+    "lastValue" : "",
+    "range": [],
+    "readOnly": false
 }
 ```
 
 ### Function
 
-* _id               -> internal id
-* type              -> Defined Type will be used for the Widget
-* name              -> Name of the Function
-* class             -> for what is it (imagesensor / hardware / imageprocessing / ...)
-* value             -> Current set Value
-* defaultValue      -> default defined Value for Reseting
-* selection         -> Range / Array / ???
-* command           -> websocket command
+* module            -> internal Hardware Module
+* parameter         -> Defined Parameter
+* possibleValues    -> Range of possible Values
+* currentValue      -> The current set Value
+* defaultValue      -> The default Value
+* lastValue         -> The previewus Value
+* range             -> Defined Range [1,10]
+* readOnly          -> Can the Value be changed or ony readed
 
-#### Data Structure
+#### UI Data
 
 ```js
-{
-    "_id":"value",
-    "type":"value",
-    "name":"value",
-    "class":"value",
-    "value":"value",
-    "defaultValue":"value",
-    "selection":"value",
-    "command":"value"
+{ "module": "camera", "parameter": "battery",
+    "name":"Battery",
+    "ui_element": "icon",
+    "defaultIcon": "battery_unknown",
+    "selectionType": "range",
+    "selection": {
+        "range":[5,20,50,99,100],
+        "icon":[
+        "battery_alert",
+        "battery_20",
+        "battery_50",
+        "battery_90",
+        "battery_full"
+        ]
+    }
+},
+{ "module": "camera", "parameter": "recording", "name": "Recording",
+    "ui_element": "bool"
 }
 ```
 
-### Page
+### UI Parameters
 
-* _id               -> internal id
-* type              -> Definition that this dataset is a page
-* name              -> Name of the Page
-* _pos              -> internal position value
-* components        -> Array of Components
+* module            -> internal Hardware Module
+* parameter         -> Defined Parameter
+* name              -> Name 
+* ui_element        -> Defines how the UI should display this Parameter
 
-#### Data Structure
+#### Final Data Structure in Web Remote
+
+The UI Data gets merged with the Daemon Data and will be in the "ui" item.
 
 ```js
 {
-    "_id":"value",
-    "type":"value",
-    "name":"value",
-    "_pos":"value",
-    "components": ["comp01_id", "comp02_id"]
+    {
+    "module": "image_sensor",
+    "parameter": "digital_gain",
+    "possibleValues": [
+    "1", "2", "3", "4", "6", "8", "10", "12", "14", "16"
+    ],
+    "currentValue": "1",
+    "defaultValue": "1",
+    "lastValue" : "",
+    "range": [],
+    "readOnly": false,
+    "ui": { "module": "image_sensor","parameter": "digital_gain",
+        "ui_element": "component", "name": "Digital Gain"
+    }
+}
 }
 ```
 
 
 ## Observable
+
+There are Multiple Observables they will be listed here:
 
 **Triggers**
 * loadPage      -> Loading Selected Page
@@ -123,15 +142,18 @@ Current target is to have something to work with.
 
 There will be 2 Ports one for a open stream from the Camera to the Web Interface second a Communication port from Web Inetrface to Camera.
 
-Example sent Command:
+The current sent Command:
 
 ```js
 {
     "sender" : "web_ui",
-    "module" : "image_sensor",
-    "command" : "set_gain",
-    "value" : "3"
-    "timestamp" : "",  // can't remember the format for now
-    "status" : "success"    // has still to be defined finally
-}
+    "module" : data.type,
+    "command" : "set",
+    "parameter" : data.command,
+    "value1" : data.selection.indexOf(data.value).toString(),
+    "value2" : '',
+    "status" : '',
+    "message" : '',
+    "timestamp" : '',
+};
 ```

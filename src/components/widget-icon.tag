@@ -8,7 +8,7 @@
  -->
 <widget-icon>
 <!-- Layout -->
-<div class="card-widget box">
+<div class="card">
         <div class="center">
             <h5>{ title }</h5>
     </div>
@@ -31,11 +31,6 @@
     .size {
         font-size: 22px;
     }
-    div.box {
-        margin: 5px;
-        width:  9rem;
-        height: 100px;
-    }
 </style>
 <!-- Code -->
 <script>
@@ -49,9 +44,9 @@ this.mixin(SharedMixin);
 this.dataObject = opts.data;
 
 // Set Values
-this.title = this.dataObject.name;
-this.value = this.dataObject.value;
-this.icon = this.dataObject.defaultIcon;
+this.title = this.dataObject.ui.name;
+this.value = this.dataObject.currentValue;
+this.icon = this.dataObject.ui.defaultIcon;
 this.id = this.dataObject._id;
 
 /**

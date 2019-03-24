@@ -11,10 +11,10 @@
     <!-- Load Components // Note: the full Object Value gets send to the Widget -->
     <div class="row">
         <div each={ data, i in components }>
-            <widget-element if={data.class == "component"} data={ data } ></widget-element>
-            <widget-icon if={data.class == "icon"} data={ data }></widget-icon>
-            <widget-bool if={data.class == "bool"} data={ data }></widget-bool>
-            <widget-chart if={data.class == "chart"} data={ data }></widget-chart>
+            <widget-element if={data.ui.ui_element == "component"} data={ data } ></widget-element>
+            <widget-icon if={data.ui.ui_element == "icon"} data={ data }></widget-icon>
+            <widget-bool if={data.ui.ui_element == "bool"} data={ data }></widget-bool>
+            <widget-chart if={data.ui.ui_element == "chart"} data={ data }></widget-chart>
         </div>
     </div>
 
@@ -45,7 +45,7 @@ this.on('mount', function() {
  */
 
 this.observable.on('DB_databaseLoaded',() => {
-    self.observable.trigger('DB_queryItems', self.db_table ,'firstPageLoad', 'type', 'page');
+    self.observable.trigger('DB_queryItems', self.db_table ,'firstPageLoad', 'ui_element', 'page');
 })
 
 this.observable.on('firstPageLoad', (data)  => {
@@ -54,6 +54,7 @@ this.observable.on('firstPageLoad', (data)  => {
 
 // Load Page Components
 this.observable.on('loadPage', (setPageValue) => {
+    console.log("setPageValue", setPageValue);
     if (typeof(setPageValue) === 'object'){
         self.components = setPageValue;
         self.disable = false;

@@ -9,7 +9,7 @@
  -->
 <widget-chart>
 <!-- Layout -->
-<div class="card-widget box">
+<div class="card">
     <div class="center">
         <h5>{ title }</h5>
     </div>
@@ -35,11 +35,6 @@
     }
     .size {
         font-size: 22px;
-    }
-    div.box {
-        margin: 5px;
-        width:  9rem;
-        height: 100px;
     }
     .center-svg{
         align-content: center;

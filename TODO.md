@@ -12,12 +12,20 @@
 ### Webapp Backend Storage
 * Add IndexedDB as Datastorage
 * Add Data Sync Functions
+* Better Data Handling
 
 ### Data File
-* update Data definition
-* Remove JSON File so it works only with Axiom Server (under Development) 
+* Remove JSON File so it works only with daemon Server (open decision mainly for UI.json file coud be load over http)
 
 ## View Tags
+* update to new CSS File and remove/reduce styles inside the tags
+
+### Page Tag
+* page tag needs some layout changes
+* dashboard tag create layout
+
+### Element tag
+* Add a Vertical Scroll List with Stepping
 
 ### Diagrams
 * Add more diagramm types: Circle, Bar
@@ -27,4 +35,4 @@
 
 ## Websocket
 * create open message array for sending the data when the connection is again active
-* on Connection loos detecting and reconnection
+* on Connection loos detecting and reconnection (simple version has been made)

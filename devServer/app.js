@@ -7,20 +7,22 @@ console.log('Start Server');
 
 const ws = new WebSocket.Server({port: 7070});
 
-// Load Config File
-let dataFile = '';
-// Load File on Startup 
-loadFile();
-
-function loadFile(){
-    let filename = 'devServer/json/data.json';
+function sendData(socket, type, filename){
+    console.log(type);
     fs.readFile(filename, 'utf8', (err, data) => {
         if (err) {
             console.error(err);
             return;
         }
-        dataFile = data;
         console.log('File is Loaded: %s', filename);
+        // Create JSON Message
+        let tx_message = {
+            "sender": "server",
+            "type": type,
+            "data": data
+        }
+        // Send the JSON Data
+        socket.send(JSON.stringify(tx_message));
     });
 }
 
@@ -28,17 +30,15 @@ ws.on('connection', socket =>{
     socket.on('message', data => {
         try {
             var message = JSON.parse(data);
-        
-            var tx_message;
             switch (message.type) {
             case 'get_all':
-                console.log('get_all');
-                tx_message = {
-                    "sender": "server",
-                    "type": "get_all",
-                    "data": dataFile
-                }
-                socket.send(JSON.stringify(tx_message));
+                sendData(socket, 'get_all', 'devServer/json/data.json');
+                break;
+            case 'get_ui':
+                sendData(socket, 'get_ui', 'devServer/json/ui.json');
+                break;
+            case 'available_parameters':
+                sendData(socket, 'get_camera', 'devServer/json/camera.json');
                 break;
             case 'set':
                 // Add Test code here
@@ -65,5 +65,4 @@ ws.on('connection', socket =>{
             socket.send('{status:\'error\', message:\'error by parsing incoming message}');
         }
     });
-     
 });

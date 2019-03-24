@@ -8,7 +8,7 @@
  -->
 <widget-bool>
 <!-- Layout -->
-<div onclick={ setState } class="card-widget box">
+<div onclick={ setState } class="card">
         <div class="center">
             <h5>{ title }</h5>
     </div>
@@ -30,11 +30,6 @@
     .center {
         text-align: center;
     }
-    div.box {
-        margin: 5px;
-        width:  9rem;
-        height: 100px;
-    }
 </style>
 <!-- Code -->
 <script>
@@ -48,9 +43,9 @@ this.mixin(SharedMixin);
 this.dataObject = opts.data;
 
 // Set Values
-this.title = this.dataObject.name;
+this.title = this.dataObject.ui.name;
 this.id = this.dataObject._id;
-this.value = this.dataObject.value;
+this.value = this.dataObject.currentValue;
 
 // Invert the Bool State True -> False -> True
 setState(e){

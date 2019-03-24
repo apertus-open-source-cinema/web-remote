@@ -10,38 +10,35 @@
     <link rel="manifest" href="manifest.json">
     <!-- @endif -->
     <!-- CSS Files  -->
-    <link rel="stylesheet" type="text/css" media="screen" href="css/app.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/webremote.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/axiom-icons.css" />
-
-    <!-- mini CSS -->
-    <link rel="stylesheet" type="text/css" media="screen" href="css/mini-default.min.css" />
 </head>
 <body>
     <!-- 
         At the Moment this Client Software is in Development
         Please Read the Readme File
      -->
-     <view-notification></view-notification>
+    <!-- <view-notification></view-notification> -->
      
-    <data-database></data-database>
-    <data-websocket></data-websocket>
-    
-    <view-navbar></view-navbar>
-    <view-searchbar></view-searchbar>
-    <!-- NOTE Firstpage Load Function inside view-page -->
-    <view-page></view-page>
-    <view-commands></view-commands>
-
-    <!-- <widget-dev></widget-dev> -->
-
-    <!-- External Libs -->
-    <script src="js/riot.min.js"></script>
-    <script src="js/riot-animore.js"></script>
-    <!-- All Components Precompiled -->
-    <script src="components/components_all.js"></script> 
+    <!-- <data-database></data-database> -->
+    <!-- <data-websocket></data-websocket> -->
+    <nav>
+        <!-- <view-sidebar></view-sidebar> -->
+    </nav>
+    <aside>
+        <!-- <view-navbar></view-navbar> -->
+        <!-- <view-searchbar></view-searchbar> -->
+        <!-- NOTE Firstpage Load Function inside view-page -->
+        <!-- <view-page></view-page> -->
+        <!-- <view-dashboard></view-dashboard> -->
+        <!-- <view-commands></view-commands> -->
+    </aside>
+    <widget-dev></widget-dev>
 
     <!-- App JS File -->
     <script src="js/app.js"></script>
+    <!-- All Components Precompiled -->
+    <script src="components/components_all.js"></script> 
 
     <!-- Service Worker -->
     <!-- @if prod -->

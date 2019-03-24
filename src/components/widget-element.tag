@@ -7,26 +7,32 @@
 
  -->
 <widget-element>
-<!-- Layout -->
-<div class="card-widget box" id={ id } hide={ listView }>
-    <div class="full-element" onclick={ toggleSize } if={ !stateBig }>
+<!-- Card -->
+<div class="card box" id={ id } hide={ listView }>
+    <div class="full-element" onclick={ toggleSize }>
         <div class="center">
             <h5>{ title }</h5>
             <h4 class="center-text">{ value }</h4>
         </div>
     </div>
-    <div class="content" if={ stateBig }>
+</div>
+<!-- Modal Window -->
+<div class="modal" if={ stateBig }> 
+    <div class="full" onclick={ toggleSize } />
+    <div class="card box-active modal-content">
+        <div class="content">
             <i onclick={ toggleSize } class="right icon icon-call_received md-24"></i>
             <div class="center">
-                    <h5>{ title }</h5>
-                    <h4 class="value">{ value }</h4>
-                    <!-- Slider -->
-                    <input class="slider" id={ id + "-valueslider" } oninput={ selectedOnChange } type="range" value={ sliderPos } min="0" max="{ selection.length-1 }" step="1">
+                <h5>{ title }</h5>
+                <h4 class="value">{ value }</h4>
+                <!-- Slider -->
+                <input class="slider" id={ id + "-valueslider" } oninput={ selectedOnChange } type="range" value={ sliderPos } min="0" max="{ selection.length-1 }" step="1">
             </div>
             <!-- Buttons -->
             <div class="section pos-relative">
                 <i onclick={ setToDefault } title="Set to Default" class="icon icon-settings_backup_restore md-36 butt-default"></i>
             </div>
+        </div>
     </div>
 </div>
 <!-- List View -->
@@ -37,6 +43,13 @@
 </div>
 <!-- Custom Style -->
 <style>
+    .full{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
     .value {
         font-size: 22px;
     }
@@ -62,19 +75,11 @@
         transition: 0s;
     }
     .box-active {
-        margin: 5px;
+        margin: auto;
         width:  18rem;
         height: 200px;
         transition: 0s;
     }
-    .transition {
-        opacity: 0;
-    }
-    .transition-active {
-        opacity: 1;
-        transition: 0.5s;
-    }
-
     .butt-default{
         margin: 10px;
         position:inherit;
@@ -99,15 +104,13 @@ this.dataObject = opts.data;
 
 // Set Values
 this.id = this.dataObject._id;
-this.title = this.dataObject.name;
-this.value = this.dataObject.value;
-this.selection = this.dataObject.selection.split(',');
+this.title = this.dataObject.ui.name;
+this.value = this.dataObject.currentValue;
+this.selection = this.dataObject.possibleValues;
 this.sliderPos = '';
 this.stateBig = false;
 
 toggleSize(e){
-    let d = document.getElementById(self.id);
-    d.classList.toggle('box-active');
     self.stateBig = !self.stateBig;
     // set Slider Position
     self.sliderPos = self.selection.indexOf(self.value);

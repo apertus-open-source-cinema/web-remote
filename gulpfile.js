@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const riot = require('gulp-riot');
 const concat = require('gulp-concat');
-// const uglify = require('gulp-uglify')
-// const rename = require('gulp-rename')
+const crass = require('gulp-crass');
+const minify = require('gulp-minify');
 const simplePreprocess = require('gulp-simple-preprocess');
 const browserSync = require('browser-sync');
 const pump = require('pump');
@@ -48,24 +48,32 @@ gulp.task('riot', (cb) => {
             compact: true
         }),
         concat('components_all.js'),
-        // .pipe(gulp.dest('dest/components'))
-        // .pipe(rename('components_all.min.js'))
-        // .pipe(uglify()),
+        minify(),
         gulp.dest('dest/components')
     ],
     cb        
     );
 });
 
-gulp.task('process_js', () => {
-    // Consider to run uglify/minify over JS files later
-    return gulp.src(['src/js/**/*']).pipe(gulp.dest('dest/js'));
+gulp.task('process_js', (cb) => {
+    pump([
+        gulp.src(['src/js/riot.min.js','src/js/app.js']),
+        concat('app.js'),
+        gulp.dest('dest/js')
+    ],
+    cb
+    );
 });
 
-gulp.task('process_css', () => {
-    // Consider to run LESS/SASS/minifier processor over CSS files later
-    return gulp.src(['src/css/**/*']).pipe(gulp.dest('dest/css')).pipe(browserSync.stream());
-});
+gulp.task('process_css', (cb) => {
+    pump([
+        gulp.src(['src/css/**/*']),
+        concat('webremote.css'),
+        crass({pretty:true}),
+        gulp.dest('dest/css'),
+        browserSync.stream()
+    ], cb);
+    });
 
 gulp.task('process_iconfont', function(){
     return gulp.src(['./src/icon/svg/*.svg'])
@@ -123,14 +131,15 @@ gulp.task('watch', ['browser-sync'], () => {
     gulp.watch(static_paths, ['copy_static']).on('change', browserSync.reload);
     gulp.watch('./src/js/**/*', ['process_js']).on('change', browserSync.reload);
     gulp.watch('./src/components/**/*', ['riot']).on('change', browserSync.reload);
+    gulp.watch('./src/index.html', ['dev_mode']).on('change', browserSync.reload);
     gulp.watch('./src/css/**/*', ['process_css']);
 });
 
-gulp.task('run_dev', ['default', 'dev_mode', 'watch']);
+gulp.task('run_dev', ['default','service-worker', 'dev_mode', 'watch']);
 
 gulp.task('build', ['default', 'prod_mode']);
 
-gulp.task('default', ['service-worker','riot', 'process_css', 'process_js','process_iconfont', 'copy_static']);
+gulp.task('default', ['riot', 'process_css', 'process_js','process_iconfont', 'copy_static']);
 
 gulp.task('run_devServer', ['dev_server', 'run_dev']);
 

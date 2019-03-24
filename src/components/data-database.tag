@@ -15,7 +15,7 @@ let self = this;
 // Mixin
 this.mixin(SharedMixin);
 
-this.url = '/json/data.json';
+// this.url = '/json/data.json';
 
 
 //prefixes of implementation that we want to test
@@ -56,6 +56,9 @@ load(db_table_name, data){
         var objectStore = db.createObjectStore(db_table_name, {keyPath: "_id"});
 
         for (var i in data) {
+            if (!data[i].hasOwnProperty('_id')) {
+                data[i]['_id'] = data[i].module + "." + data[i].parameter; // create a ID with module and parameter
+            }
             objectStore.add(data[i]);
         }
     }
@@ -119,29 +122,39 @@ updateValue(db_table_name, id, value){
         if(request.result) {
             request.result.value = value;
             objectStore = objectStore.put(request.result);
-            console.log();
         } else {
             console.log("Update failed in database!");
         }
     };
 }
 
+addValue(db_table_name, id, data){
+    var transaction = self.db.transaction([db_table_name], "readwrite");
+    var objectStore = transaction.objectStore(db_table_name);
+    var request = objectStore.get(id);
 
-/*
-function add() {
-    var request = db.transaction([db_objstore_name], "readwrite")
-    .objectStore(db_objstore_name)
-    .add({ id: "00-03", name: "Kenny", age: 19, email: "kenny@planet.org" });
-    
-    request.onsuccess = function(event) {
-        console.log("Kenny has been added to your database.");
+    request.onerror = function(event) {
+        console.log("Unable to retrieve data from database!");
     };
     
-    request.onerror = function(event) {
-        console.log("Unable to add data\r\nKenny is aready exist in your database! ");
-    }
+    request.onsuccess = function(event) {
+        if(request.result) {
+            request.result['ui'] = data;
+            objectStore = objectStore.put(request.result);
+            console.log(request.result);
+        } else {
+            if (data.ui_element == "page"){
+                data['_id'] = data.ui_element + '.' + data.module;
+                objectStore = objectStore.put(data);
+                console.log(data);
+            }
+            else{
+                console.log("failed to add Data into database!");
+            }
+        }
+    };
 }
-*/
+
 
 deleteItem(db_table_name, id) {
     var request = self.db.transaction([db_table_name], "readwrite")
@@ -160,12 +173,22 @@ deleteItem(db_table_name, id) {
     The Database gets Loaded and a update get's requested over websocket.
 */  
 this.observable.on('DB_loadDatabase', () => {
-    self.observable.trigger("WS_GET_ALL"); // Sent a request to Server to get Data
+    self.observable.trigger("WS_GET_DATA");     // Sent a request to Server to get Data
 });
-    
+
 this.observable.on('DB_updateDatabase', (data) => {
     console.log('DB_updateDatabase');
     self.load(self.db_table, data);
+    self.observable.trigger("WS_GET_UI");     // Sent a request to Server to get ui Data
+});
+
+this.observable.on('DB_addUItoDatabase', (data) => {
+    console.log('DB_addUItoDatabase');
+    for (let i = 0; i < data.length; i++){
+        let id = data[i].module + "." + data[i].parameter;
+        self.addValue(self.db_table, id, data[i]);
+
+    }
 });
 
 /**
@@ -203,9 +226,6 @@ this.observable.on('DB_querySelection', (trigger, object,  objectValue) => {
     self.observable.trigger(trigger, matches);
 })
 
-// this.observable.on('DB_updateItem', (item) => {
-//     self.updateValue(db_table_name, item._id, item.value);
-// })
 
 this.observable.on('DB_deleteItems', (db_table_name, items) => {
     items.forEach((id) => {

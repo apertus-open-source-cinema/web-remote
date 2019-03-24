@@ -58,21 +58,23 @@
         self.ws.onmessage = (e) => {
             console.log(e.data);
             let message = JSON.parse(e.data);
+            console.log(message);
             let data = JSON.parse(message.data);
             console.log('Server: ');
-            console.log(data);
 
             switch (message.type) {
                 case 'get_all':
                     console.log('get_all');
                     self.observable.trigger('DB_updateDatabase', data);
                     break;
-                // case 'set':
-                //     console.log('set');
-                //     break;
-                // case 'sync':
-                //     console.log('sync');
-                //     break;
+                case 'get_ui':
+                    console.log('get_ui');
+                    self.observable.trigger('DB_addUItoDatabase', data);
+                    break;
+                case 'get_camera':
+                    console.log('get_camera');
+                    self.observable.trigger('DB_updateDatabase', data);
+                    break;
             
                 default:
                     console.log('ERROR RX Message has a wrong Type!');
@@ -94,7 +96,7 @@
                 "module" : data.type,
                 "command" : "set",
                 "parameter" : data.command,
-                "value1" : data.selection.split(',').indexOf(data.value).toString(),
+                "value1" : data.selection.indexOf(data.value).toString(),
                 "value2" : '',
                 "status" : '',
                 "message" : '',
@@ -102,10 +104,12 @@
                 };
                 break;
             case 'get_all':
+            case 'available_parameters':
+            case 'get_ui':
                 message = {
                 "sender" : "web_ui",
                 "module" : "system",
-                "type" : "get_all"
+                "type" : type
                 };
                 break;
             case 'sync':
@@ -162,6 +166,12 @@
         }
         if('WS_GET_ALL' === event){
             self.send(self.createMessage('get_all',data));
+        }
+        if('WS_GET_DATA' === event){
+            self.send(self.createMessage('available_parameters',data));
+        }
+        if('WS_GET_UI' === event){
+            self.send(self.createMessage('get_ui',data));
         }
         if('WS_SYNC' === event){
             self.send(self.createMessage('sync',data));
