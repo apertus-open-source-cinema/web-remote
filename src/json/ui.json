@@ -1,0 +1,41 @@
+[
+    { "module": "image_sensor","parameter": "analog_gain",
+        "ui_element": "component", "name": "Analog Gain"
+    },
+    { "module": "image_sensor","parameter": "digital_gain",
+        "ui_element": "component", "name": "Digital Gain"
+    },
+    { "module": "camera", "parameter": "battery",
+        "name":"Battery",
+        "ui_element": "icon",
+        "defaultIcon": "battery_unknown",
+        "selectionType": "range",
+        "selection": {
+            "range":[5,20,50,99,100],
+            "icon":[
+            "battery_alert",
+            "battery_20",
+            "battery_50",
+            "battery_90",
+            "battery_full"
+            ]
+        }
+    },
+    { "module": "camera", "parameter": "recording", "name": "Recording",
+        "ui_element": "bool"
+    },
+    { "module": "camera", "ui_element": "page", "name": "Camera",
+        "pos": "0",
+        "components": [
+            "camera.battery",
+            "camera.recording"
+        ]
+    },
+    { "module": "image_sensor", "ui_element": "page", "name": "Image Sensor",
+        "pos": "1",
+        "components": [
+            "image_sensor.analog_gain",
+            "image_sensor.digital_gain"
+        ]
+    }
+]

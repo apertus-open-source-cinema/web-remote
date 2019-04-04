@@ -259,7 +259,7 @@ input[type="range"]::-moz-range-thumb {
 
     margin: 5px;
     width:  9rem;
-    height: 100px;
+    min-height: 100px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -318,7 +318,7 @@ input[type="range"]::-moz-range-thumb {
   .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    /* padding: 20px; */
     border: 1px solid #888;
     width: 50%;
   }

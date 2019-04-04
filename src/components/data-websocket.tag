@@ -25,10 +25,6 @@
     this.wsUrl = "ws://" + host + ":7070/";
     this.wsFeedUrl = "ws://" + host + ":7070/";
     this.ws = '';
-    
-    retry(){
-        
-    }
 
     send(data) {
         self.ws = new WebSocket(self.wsUrl);
@@ -67,10 +63,6 @@
                     console.log('get_all');
                     self.observable.trigger('DB_updateDatabase', data);
                     break;
-                case 'get_ui':
-                    console.log('get_ui');
-                    self.observable.trigger('DB_addUItoDatabase', data);
-                    break;
                 case 'get_camera':
                     console.log('get_camera');
                     self.observable.trigger('DB_updateDatabase', data);
@@ -96,7 +88,7 @@
                 "module" : data.type,
                 "command" : "set",
                 "parameter" : data.command,
-                "value1" : data.selection.indexOf(data.value).toString(),
+                // "value1" : data.selection.indexOf(data.value).toString(),
                 "value2" : '',
                 "status" : '',
                 "message" : '',
@@ -105,7 +97,6 @@
                 break;
             case 'get_all':
             case 'available_parameters':
-            case 'get_ui':
                 message = {
                 "sender" : "web_ui",
                 "module" : "system",
@@ -169,9 +160,6 @@
         }
         if('WS_GET_DATA' === event){
             self.send(self.createMessage('available_parameters',data));
-        }
-        if('WS_GET_UI' === event){
-            self.send(self.createMessage('get_ui',data));
         }
         if('WS_SYNC' === event){
             self.send(self.createMessage('sync',data));

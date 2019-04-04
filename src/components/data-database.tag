@@ -15,9 +15,6 @@ let self = this;
 // Mixin
 this.mixin(SharedMixin);
 
-// this.url = '/json/data.json';
-
-
 //prefixes of implementation that we want to test
 window.indexedDB = window.indexedDB || window.mozIndexedDB || 
 window.webkitIndexedDB || window.msIndexedDB;
@@ -60,6 +57,7 @@ load(db_table_name, data){
                 data[i]['_id'] = data[i].module + "." + data[i].parameter; // create a ID with module and parameter
             }
             objectStore.add(data[i]);
+            console.log("adding Data", data[i]);
         }
     }
 }
@@ -166,29 +164,47 @@ deleteItem(db_table_name, id) {
     };
 }
 
+
 /*
     Loads the Database
     ==================
 
     The Database gets Loaded and a update get's requested over websocket.
 */  
+
 this.observable.on('DB_loadDatabase', () => {
-    self.observable.trigger("WS_GET_DATA");     // Sent a request to Server to get Data
+    self.observable.trigger('WS_GET_DATA');     // Sent a request to Server to get Data
 });
 
 this.observable.on('DB_updateDatabase', (data) => {
-    console.log('DB_updateDatabase');
     self.load(self.db_table, data);
-    self.observable.trigger("WS_GET_UI");     // Sent a request to Server to get ui Data
 });
 
-this.observable.on('DB_addUItoDatabase', (data) => {
-    console.log('DB_addUItoDatabase');
-    for (let i = 0; i < data.length; i++){
-        let id = data[i].module + "." + data[i].parameter;
-        self.addValue(self.db_table, id, data[i]);
+this.observable.on('DB_databaseLoaded', (data) => {
+    self.observable.trigger('DB_loadUI_Data');     // Sent a request to Server to get ui Data
+});
 
+this.observable.on('DB_loadUI_Data', () => {
+    let url = '/json/ui.json';
+    fetch(url)
+        .then(res => res.json())
+        .then((data) => {
+            self.observable.trigger('DB_addUItoDatabase', data);
+        })
+        .catch(err => { throw err })
+    });
+    
+this.observable.on('DB_addUItoDatabase', (data) => {
+    let id = '';
+    for (let i = 0; i < data.length; i++){
+        if(data[i].parameter){
+            id = data[i].module + "." + data[i].parameter;
+        } else {
+            id = data[i].ui_element + "." + data[i].module;
+        }
+        self.addValue(self.db_table, id, data[i]);
     }
+    self.observable.trigger('DB_UI_Data_Loaded', data);
 });
 
 /**

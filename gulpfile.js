@@ -48,7 +48,7 @@ gulp.task('riot', (cb) => {
             compact: true
         }),
         concat('components_all.js'),
-        minify(),
+        // minify(),
         gulp.dest('dest/components')
     ],
     cb        

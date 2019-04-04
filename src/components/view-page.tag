@@ -44,12 +44,12 @@ this.on('mount', function() {
  * OBSERVABLE
  */
 
-this.observable.on('DB_databaseLoaded',() => {
+this.observable.on('DB_UI_Data_Loaded',() => {
     self.observable.trigger('DB_queryItems', self.db_table ,'firstPageLoad', 'ui_element', 'page');
 })
 
 this.observable.on('firstPageLoad', (data)  => {
-    self.observable.trigger('DB_getItemsById', self.db_table , 'loadPage', '_id', data[0].components);
+    self.observable.trigger('DB_getItemsById', self.db_table , 'loadPage', '_id', data[1].components);
 })
 
 // Load Page Components
