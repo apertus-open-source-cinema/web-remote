@@ -14,20 +14,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browser-sync": "^2.26.3",
-    "eslint": "^5.7.0",
-    "fs": "^0.0.1-security",
-    "gulp": "^3.9.1",
+    "browser-sync": "^2.26.5",
+    "eslint": "^5.16.0",
+    "fs": "^0.0.2",
+    "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-crass": "^0.2.2",
     "gulp-iconfont": "^10.0.2",
-    "gulp-iconfont-css": "^2.3.0",
+    "gulp-iconfont-css": "^3.0.0",
     "gulp-minify": "^3.1.0",
     "gulp-riot": "^1.1.5",
     "gulp-run": "^1.7.1",
     "gulp-simple-preprocess": "^1.0.0",
     "pump": "^3.0.0",
     "sw-precache": "^5.2.1",
-    "ws": "^6.1.2"
+    "ws": "^7.0.0"
   }
 }
