@@ -39,11 +39,11 @@ gulp.task('service-worker', (cb) => {
   }, cb);
 });
 
-gulp.task('riot', (cb) => {
+gulp.task('riot_build', (cb) => {
   pump([
     gulp.src('src/components/*.tag'),
     riot({
-      compact: true
+      compact: false
     }),
     concat('components_all.js'),
     // minify(),
@@ -73,27 +73,27 @@ gulp.task('process_css', (cb) => {
   ], cb);
 });
 
-gulp.task('process_iconfont', function () {
-  return gulp.src(['./src/icon/svg/*.svg'])
-    .pipe(iconfontCss({
+gulp.task('process_iconfont', (cb) => {
+  pump([ gulp.src(['./src/icon/svg/*.svg']),
+    iconfontCss({
       fontName: fontName, // The name that the generated font will have
       path: 'src/icon/_icons.css', // The path to the template that will be used to create the SASS/LESS/CSS file
       targetPath: '../../dest/css/' + fontName + '.css', // The path where the file will be generated
       fontPath: '../icons/' // The path to the icon font file
-    }))
-    .pipe(iconfont({
+    }),
+    iconfont({
       fontName: fontName, // required
       prependUnicode: false, // recommended option
       formats: ['eot', 'woff', 'ttf', 'svg'], // default, 'woff2' and 'svg' are available
       timestamp: runTimestamp, // recommended to get consistent builds when watching files
       // fontHeight: '1001',
       normalize: true
-    }))
-    .on('glyphs', function (glyphs, options) {
-      // CSS templating, e.g.
-      console.log(glyphs, options);
     })
-    .pipe(gulp.dest('dest/icons/'));
+      .on('glyphs', function (glyphs, options) {
+      // CSS templating, e.g.
+        console.log(glyphs, options);
+      }),
+    gulp.dest('dest/icons/')], cb);
 });
 
 const staticPaths = ['./src/*.js', './src/*.json', './src/icon/**/*', './src/json/**/*', './src/img/**/*'];
@@ -106,10 +106,12 @@ const staticList =
   'json_data': ['./src/json/**/*', './dest/json/']
 };
 
-gulp.task('copy_static', () => {
+gulp.task('copy_static', (cb) => {
   for (var count in staticList) {
     gulp.src([staticList[count][0]]).pipe(gulp.dest(staticList[count][1]));
   }
+
+  cb();
 });
 
 gulp.task('browser-sync', function () {
@@ -128,16 +130,16 @@ gulp.task('dev_server', function () {
 gulp.task('watch', gulp.series('browser-sync', () => {
   gulp.watch(staticPaths, gulp.series('copy_static')).on('change', browserSync.reload);
   gulp.watch('./src/js/**/*', gulp.series('process_js')).on('change', browserSync.reload);
-  gulp.watch('./src/components/**/*', gulp.series('riot')).on('change', browserSync.reload);
+  gulp.watch('./src/components/**/*', gulp.series('riot_build')).on('change', browserSync.reload);
   gulp.watch('./src/index.html', gulp.series('dev_mode')).on('change', browserSync.reload);
   gulp.watch('./src/css/**/*', gulp.series('process_css'));
 }));
 
 gulp.task('run_dev', gulp.series('service-worker', 'dev_mode', 'watch'));
 
-gulp.task('build', gulp.series('prod_mode'));
+gulp.task('build', gulp.series('riot_build', 'process_css', 'process_js', 'process_iconfont', 'copy_static', 'prod_mode'));
 
-gulp.task('default', gulp.series('riot', 'process_css', 'process_js', 'process_iconfont', 'copy_static'));
+gulp.task('default', gulp.series('riot_build', 'process_css', 'process_js', 'process_iconfont', 'copy_static'));
 
 gulp.task('run_devServer', gulp.series('dev_server', 'run_dev'));
 
